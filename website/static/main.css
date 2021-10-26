@@ -1,0 +1,71 @@
+/* home page */
+
+
+.home_img {
+    height: 500px;
+}
+
+.home_description {
+    max-width: 800px;
+}
+
+
+/* Rescue page */
+.rescue_section {
+    max-width: 2000px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    flex-wrap: wrap;
+  }
+
+  .each_rescue {
+    padding: 10px;
+    min-width: 400px;
+    max-width: 400px;
+    box-sizing: border-box;
+    border: 1px solid black;
+  }
+
+li {
+  list-style-type: none;
+
+}
+
+/* dog page */
+.dog_section {
+    max-width: 2000px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    flex-wrap: wrap;
+  }
+
+  .each_dog {
+    padding: 10px;
+    min-width: 500px;
+    max-width: 500px;
+    box-sizing: border-box;
+    border: 1px solid black;
+  }
+
+
+
+  /* ********************************** */
+  /* Hide the text */
+
+  #myDIV {
+    width: 100%;
+    padding: 50px 0;
+    text-align: center;
+    background-color: lightblue;
+    margin-top: 20px;
+  }
+
+
+
+  /* ********************************** */

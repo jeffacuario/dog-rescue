@@ -1,0 +1,117 @@
+{% extends "base.html" %} {% block title %}Search Dogs{% endblock %}
+
+
+{% block content %}
+<br>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="collapse navbar-collapse" id="navbarText">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link btn btn-warning" href="#">Filter</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link">Sort by:</a>
+        </li>
+        <li>
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Dropdown button
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="#">Nearest</a>
+                <a class="dropdown-item" href="#">Furthest</a>
+                <a class="dropdown-item" href="#">Alphabetical</a>
+                </div>
+            </div>
+        </li>
+
+        
+        <li class="nav-item">
+            <!-- Button trigger modal Search Rescues-->
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#searchRescueModal">
+                New Search
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="searchRescueModal" tabindex="-1" role="dialog" aria-labelledby="searchRescueModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="searchRescueModalLabel">Search for rescues</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="/rescues" method="post">
+                                <div class="mb-3">
+                                    <label for="location" class="form-label">Location*</label>
+                                    <input type="number" class="form-control" id="location" aria-describedby="locationHelp" name="location" placeholder="Enter Zip Code" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="distance" class="form-label">Distance</label>
+                                    <input type="number" class="form-control" id="distance" aria-describedby="distanceHelp" name="distance" placeholder="Enter Miles">
+                                </div>
+                                <div id="note" class="form-text">Note: Increasing distance will show more results
+                                    
+                                </div>
+                                <br>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </form>
+        
+                        </div>
+                    </div>
+                </div>
+            </div>
+  </nav>
+
+
+
+<h3>{{data['pagination'].total_count}} Available Rescues {{data['distance']}} miles from {{data['location']}}:</h3>
+
+    <div class="rescue_section">
+        {% for n in range(data["organizations"]| length) %}
+
+        <div class="each_rescue">
+            <h2>{{data["organizations"][n].name}}</h2>
+            <div>
+                {% if data["organizations"][n].photos[0]%}
+                    <a href="{{data["organizations"][n].url}}"><img src="{{data["organizations"][n].photos[0]['medium']}}" alt=""></a>
+                {% else %}
+                    <a href="{{data["organizations"][n].url}}"><img src="{{ url_for('static', filename='holder.JPG') }}" alt="" height="300"></a>
+                {%endif%}
+            </div>
+
+            <ul>
+                <br>
+                <strong>Hours:</strong>
+                <li>Monday : {{data["organizations"][n].hours['monday']}}</li>
+                <li>Tuesday : {{data["organizations"][n].hours['tuesday']}}</li>
+                <li>Wednesday : {{data["organizations"][n].hours['wednesday']}}</li>
+                <li>Thursday : {{data["organizations"][n].hours['thursday']}}</li>
+                <li>Friday : {{data["organizations"][n].hours['friday']}}</li>
+                <li>Saturday : {{data["organizations"][n].hours['saturday']}}</li>
+                <li>Sunday : {{data["organizations"][n].hours['sunday']}}</li>
+
+                <br>
+                <strong>Contact Number:</strong> 
+                <li>{{data["organizations"][n].phone}}</li>
+
+                <br>
+                <strong>Zip code:</strong> 
+                <li>{{data["organizations"][n]['address'].postcode}}</li>
+
+                <br>
+                <strong>Email:</strong> 
+                <li>{{data["organizations"][n].email}}</li>
+
+                <br>
+                <strong>Mission Statement:</strong> 
+                <li>{{data["organizations"][n].mission_statement}}</li>
+            </ul>
+        </div>
+    {% endfor %}
+    </div>
+{% endblock %}
+
+<!-- TODO work on pagination -->

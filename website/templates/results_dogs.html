@@ -1,0 +1,122 @@
+{% extends "base.html" %} {% block title %}Search Dogs{% endblock %}
+
+
+{% block content %}
+<br>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="collapse navbar-collapse" id="navbarText">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link btn btn-warning" href="#">Filter</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link">Sort by:</a>
+        </li>
+        <li>
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Dropdown button
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="#">Nearest</a>
+                <a class="dropdown-item" href="#">Furthest</a>
+                <a class="dropdown-item" href="#">Alphabetical</a>
+                </div>
+            </div>
+        </li>
+
+        
+        <li class="nav-item">
+            <!-- Button trigger modal Search Dogs-->
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#searchDogsModal">
+                New Search
+            </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="searchDogsModal" tabindex="-1" role="dialog" aria-labelledby="searchDogsModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="searchDogsModalLabel">Search for dogs</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                    <form action="/dogs" method="post">
+                        <!-- TODO need a check for location (validation) -->
+                        <div class="mb-3">
+                            <label for="location" class="form-label">Location*</label>
+                            <input type="number" class="form-control" id="location" aria-describedby="locationHelp" name="location" placeholder="Enter Zip Code" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="distance" class="form-label">Distance</label>
+                            <input type="number" class="form-control" id="distance" aria-describedby="distanceHelp" name="distance" placeholder="Enter Miles">
+                        </div>
+                        <div class="mb-3">
+                            <label for="primaryBreed" class="form-label">Primary Breed</label>
+                            <input type="text" class="form-control" id="primaryBreed" aria-describedby="primaryBreedHelp" name="primaryBreed" placeholder="Enter Primary Breed">
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="secondaryBreed" class="form-label">Secondary Breed</label>
+                            <input type="text" class="form-control" id="secondaryBreed" aria-describedby="secondaryBreedHelp" name="secondaryBreed" placeholder="Enter Secondary Breed">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="age" class="form-label">Age</label>
+                            <input type="text" class="form-control" id="age" aria-describedby="ageHelp" name="age" placeholder="Enter Age">
+                        </div>
+                        <div class="mb-3">
+                            <label for="gender" class="form-label">Gender</label>
+                            <input type="text" class="form-control" id="gender" aria-describedby="genderHelp" name="gender" placeholder="Enter Gender">
+                        </div>
+                        <div id="note" class="form-text">Note: Filling out more fields allows us to better find your perfect dog</div>
+                        <br>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+  </nav>
+
+
+
+<h3>{{data['pagination'].total_count}} Available Dogs {{data['distance']}} miles from {{data['location']}}:</h3>
+
+
+    <div class="dog_section">
+        {% for n in range(data["animals"]| length) %}
+
+        <div class="each_dog">
+            <h2>{{n+1}}. {{data["animals"][n].name}}</h2>
+            <div>
+                {% if data["animals"][n].photos[0]%}
+                    <a href="{{data["animals"][n].url}}"><img src="{{data["animals"][n].photos[0]['medium']}}" alt=""></a>
+                {% else %}
+                    <a href="{{data["animals"][n].url}}"><img src="{{ url_for('static', filename='holder.JPG') }}" alt="" height="300"></a>
+                {%endif%}
+            </div>
+
+            <br>
+            <ul>
+                <li><strong>Primary Breed:</strong> {{data["animals"][n].breeds['primary']}} <button onclick="myFunction({{n}})">More Info</button></li>
+                <li><strong>Secondary Breed:</strong> {{data["animals"][n].breeds['secondary']}}</li>
+                <li><strong>Age:</strong> {{data["animals"][n].age}}</li>
+                <li><strong>Size:</strong> {{data["animals"][n].size}}</li>
+                <li><strong>Gender:</strong> {{data["animals"][n].gender}}</li>
+            </ul>
+
+            <p id={{n}} style="display:none;">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempore debitis vitae temporibus, fugit omnis necessitatibus nulla itaque recusandae quis expedita nostrum at doloribus officiis accusamus ea vero sapiente aspernatur perspiciatis.
+            Officiis eligendi incidunt voluptates, quia beatae ipsam enim, repudiandae totam sunt dolor corporis illo aspernatur nisi facere dicta suscipit ea? Suscipit, similique. Ratione blanditiis quis in perferendis delectus quos dolorem.
+            Ipsa eligendi officia corrupti exercitationem perspiciatis corporis delectus nulla, quae architecto, reprehenderit dolore? Eveniet necessitatibus natus soluta ea, ratione tempore repellendus atque accusamus? Eaque ab nisi maxime in tempore deserunt!
+            </p>
+
+        </div>
+
+    {% endfor %}
+
+    </div>
+
+{% endblock %}
