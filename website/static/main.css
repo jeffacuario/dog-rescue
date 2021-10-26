@@ -1,18 +1,30 @@
 /* home page */
+.container {
+  max-width: 2000px;
+  justify-content:center;
+  text-align:center;
+}
 
+form {
+  text-align: left;
+}
 
 .home_img {
     height: 500px;
 }
 
 .home_description {
-    max-width: 800px;
+    max-width: 600px;
+    margin: auto;
+    padding: 10px;
 }
 
+.searchRescueButton{
+  margin-right: 100px;
+}
 
 /* Rescue page */
 .rescue_section {
-    max-width: 2000px;
     margin-left: auto;
     margin-right: auto;
     display: flex;

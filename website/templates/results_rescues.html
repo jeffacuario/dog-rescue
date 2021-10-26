@@ -63,6 +63,61 @@
                     </div>
                 </div>
             </div>
+        
+
+            <li class="nav-item">
+                <!-- Button trigger modal Search Dogs-->
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#searchDogsModal">
+                    Search Dogs
+                </button>
+    
+        <!-- Modal -->
+        <div class="modal fade" id="searchDogsModal" tabindex="-1" role="dialog" aria-labelledby="searchDogsModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="searchDogsModalLabel">Search for dogs</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="/dogs" method="post">
+                            <!-- TODO need a check for location (validation) -->
+                            <div class="mb-3">
+                                <label for="location" class="form-label">Location*</label>
+                                <input type="number" class="form-control" id="location" aria-describedby="locationHelp" name="location" placeholder="Enter Zip Code" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="distance" class="form-label">Distance</label>
+                                <input type="number" class="form-control" id="distance" aria-describedby="distanceHelp" name="distance" placeholder="Enter Miles">
+                            </div>
+                            <div class="mb-3">
+                                <label for="primaryBreed" class="form-label">Primary Breed</label>
+                                <input type="text" class="form-control" id="primaryBreed" aria-describedby="primaryBreedHelp" name="primaryBreed" placeholder="Enter Primary Breed">
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="secondaryBreed" class="form-label">Secondary Breed</label>
+                                <input type="text" class="form-control" id="secondaryBreed" aria-describedby="secondaryBreedHelp" name="secondaryBreed" placeholder="Enter Secondary Breed">
+                            </div>
+    
+                            <div class="mb-3">
+                                <label for="age" class="form-label">Age</label>
+                                <input type="text" class="form-control" id="age" aria-describedby="ageHelp" name="age" placeholder="Enter Age">
+                            </div>
+                            <div class="mb-3">
+                                <label for="gender" class="form-label">Gender</label>
+                                <input type="text" class="form-control" id="gender" aria-describedby="genderHelp" name="gender" placeholder="Enter Gender">
+                            </div>
+                            <div id="note" class="form-text">Note: Filling out more fields allows us to better find your perfect dog</div>
+                            <br>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
   </nav>
 
 
