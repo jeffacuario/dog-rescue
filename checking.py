@@ -1,8 +1,8 @@
 params = {}
 
 # string = '/v2/animals?distance=10&location=94513&type=Dog&page=2'
-string = '/v2/animals?distance=10&location=94513&page=1&type=Dog'
-
+# string = '/v2/animals?distance=10&location=94513&page=1&type=Dog'
+string = '/v2/organizations?distance=50&location=94513&page=2'
 
 v = string.find("?")
 y = string.find('=')

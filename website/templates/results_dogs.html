@@ -157,22 +157,24 @@
     </div>
 
 
-
-    {% if data['pagination']._links['previous'] %}
+    <div class="pagination">
+        {% if data['pagination']._links['previous'] %}
         <form action="/dogs" method="post">
             <div class="mb-3" style="display:none">
                 <input type="text" class="form-control" id="next" aria-describedby="nextHelp" name="next" value="{{data['pagination']._links['previous'].href}}">
             </div>
-            <button type="submit" class="btn btn-primary">Previous page</button>
+            <button type="submit" class="btn btn-primary">Previous</button>
         </form>
-    {% endif %}
+        {% endif %}
 
-    {% if data['pagination']._links['next'] %}
-        <form action="/dogs" method="post">
-            <div class="mb-3" style="display:none">
-                <input type="text" class="form-control" id="next" aria-describedby="nextHelp" name="next" value="{{data['pagination']._links['next'].href}}">
-            </div>
-            <button type="submit" class="btn btn-primary">Next page</button>
-        </form>
-    {% endif %}
+        {% if data['pagination']._links['next'] %}
+            <form action="/dogs" method="post">
+                <div class="mb-3" style="display:none">
+                    <input type="text" class="form-control" id="next" aria-describedby="nextHelp" name="next" value="{{data['pagination']._links['next'].href}}">
+                </div>
+                <button type="submit" class="btn btn-primary">Next</button>
+            </form>
+        {% endif %}
+    </div>
+
 {% endblock %}

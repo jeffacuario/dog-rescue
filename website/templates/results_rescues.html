@@ -167,6 +167,28 @@
         </div>
     {% endfor %}
     </div>
-{% endblock %}
 
-<!-- TODO work on pagination -->
+    {% if data['pagination']._links %}
+    <div class="pagination">
+        {% if data['pagination']._links['previous'] %}
+        <form action="/rescues" method="post">
+            <div class="mb-3" style="display:none">
+                <input type="text" class="form-control" id="next" aria-describedby="nextHelp" name="next" value="{{data['pagination']._links['previous'].href}}">
+            </div>
+            <button type="submit" class="btn btn-primary">Previous</button>
+        </form>
+        {% endif %}
+
+        {% if data['pagination']._links['next'] %}
+            <form action="/rescues" method="post">
+                <div class="mb-3" style="display:none">
+                    <input type="text" class="form-control" id="next" aria-describedby="nextHelp" name="next" value="{{data['pagination']._links['next'].href}}">
+                </div>
+                <button type="submit" class="btn btn-primary">Next</button>
+            </form>
+        {% endif %}
+    </div>
+    {% endif %}
+
+
+{% endblock %}

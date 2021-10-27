@@ -37,6 +37,45 @@ def home():
 @views.route('/rescues', methods=['POST'])
 def results_rescues():
     if request.method == 'POST':
+        try:
+            if request.form['next']:
+                string = request.form['next']
+
+                params = {}
+
+                v = string.find("?")
+                y = string.find('=')
+
+                first = string[v+1:y]
+                v = string.find("&")
+                first_value = string[y+1:v]
+                params[first] = first_value
+
+
+                string = string[v+1:]
+                while v != -1 and y != -1:
+                    y = string.find("=")
+                    v = string.find("&")
+                    word = string[:y]
+                    value = string[y+1:v]
+                    params[word] = value
+                    
+                    string = string[v+1:]
+
+                if value != string[y+1:]:
+                    params[word] = string[y+1:]
+
+                r = requests.get(rescue_search, headers=headers, params=params)
+                v = r.json()
+                v['location'] = params['location']
+                v['distance'] = params['distance']
+
+                return render_template("results_rescues.html", data=v)
+        except:
+            pass
+
+
+
         if (request.form['distance']) == '':
             params = {
             "location" :int(request.form['location']),
