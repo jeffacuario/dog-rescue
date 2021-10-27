@@ -78,8 +78,8 @@ def results_rescues():
 
         if (request.form['distance']) == '':
             params = {
-            "location" :int(request.form['location']),
-            "distance" :0
+            "location" : int(request.form['location']),
+            "distance" : 0
             }
         else:
             params = {
@@ -145,7 +145,9 @@ def results_dogs():
             if request.form[each] != '':
                 params[each] = request.form[each]
 
-        print(params)
+        if (request.form['distance']) == '':
+            params["distance"] = 0
+            
         r = requests.get(dog_search, headers=headers, params=params)
         v = r.json()
         v['location'] = params['location']

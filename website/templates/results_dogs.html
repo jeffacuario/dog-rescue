@@ -53,14 +53,10 @@
                             <label for="distance" class="form-label">Distance</label>
                             <input type="number" class="form-control" id="distance" aria-describedby="distanceHelp" name="distance" placeholder="Enter Miles">
                         </div>
-                        <div class="mb-3">
-                            <label for="primaryBreed" class="form-label">Primary Breed</label>
-                            <input type="text" class="form-control" id="primaryBreed" aria-describedby="primaryBreedHelp" name="primaryBreed" placeholder="Enter Primary Breed">
-                        </div>
                         
                         <div class="mb-3">
-                            <label for="secondaryBreed" class="form-label">Secondary Breed</label>
-                            <input type="text" class="form-control" id="secondaryBreed" aria-describedby="secondaryBreedHelp" name="secondaryBreed" placeholder="Enter Secondary Breed">
+                            <label for="breed" class="form-label">Breed</label>
+                            <input type="text" class="form-control" id="breed" aria-describedby="breedHelp" name="breed" placeholder="Enter Breed">
                         </div>
 
                         <div class="mb-3">
@@ -157,6 +153,7 @@
     </div>
 
 
+    {% if data['pagination']._links %}
     <div class="pagination">
         {% if data['pagination']._links['previous'] %}
         <form action="/dogs" method="post">
@@ -176,5 +173,5 @@
             </form>
         {% endif %}
     </div>
-
+    {% endif %}
 {% endblock %}
