@@ -121,7 +121,6 @@
   </nav>
 
 
-
 <h3>{{data['pagination'].total_count}} Available Dogs {{data['distance']}} miles from {{data['location']}}:</h3>
 
 
@@ -129,13 +128,13 @@
         {% for n in range(data["animals"]| length) %}
 
         <div class="each_dog">
-            <h2>{{n+1}}. {{data["animals"][n].name}}</h2>
+            <h2>{{data["animals"][n].name}}</h2>
             <div>
-                {% if data["animals"][n].photos[0]%}
+                {% if data["animals"][n].photos[0] %}
                     <a href="{{data["animals"][n].url}}"><img src="{{data["animals"][n].photos[0]['medium']}}" alt=""></a>
                 {% else %}
                     <a href="{{data["animals"][n].url}}"><img src="{{ url_for('static', filename='holder.JPG') }}" alt="" height="300"></a>
-                {%endif%}
+                {% endif %}
             </div>
 
             <br>
@@ -155,7 +154,25 @@
         </div>
 
     {% endfor %}
-
     </div>
 
+
+
+    {% if data['pagination']._links['previous'] %}
+        <form action="/dogs" method="post">
+            <div class="mb-3" style="display:none">
+                <input type="text" class="form-control" id="next" aria-describedby="nextHelp" name="next" value="{{data['pagination']._links['previous'].href}}">
+            </div>
+            <button type="submit" class="btn btn-primary">Previous page</button>
+        </form>
+    {% endif %}
+
+    {% if data['pagination']._links['next'] %}
+        <form action="/dogs" method="post">
+            <div class="mb-3" style="display:none">
+                <input type="text" class="form-control" id="next" aria-describedby="nextHelp" name="next" value="{{data['pagination']._links['next'].href}}">
+            </div>
+            <button type="submit" class="btn btn-primary">Next page</button>
+        </form>
+    {% endif %}
 {% endblock %}

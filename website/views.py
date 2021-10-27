@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template
 from flask import request
 import requests
+import json
 
 views = Blueprint('views', __name__)
 
@@ -10,15 +11,15 @@ setup = 'https://api.petfinder.com/v2/oauth2/token'
 dog_search = 'https://api.petfinder.com/v2/animals/'
 rescue_search = 'https://api.petfinder.com/v2/organizations/'
 breed_list = 'https://api.petfinder.com/v2/types/dog/breeds'
-next_page1 = 'https://api.petfinder.com/'
 
 
+with open('credentials.json') as config_file:
+    config = json.load(config_file)
 
-# TODO hide this stuff
 data = {
-    'grant_type': 'client_credentials',
-    'client_id': "5446CBgLfw9SuJlUBqkQ8Pxkd33ZC81Zzdf7monQvmZWbSK7DU",
-    'client_secret': 'oGDRPbKFdFOzv3WVNToy7GgbHusPRHt7vMDogY1T'
+    'grant_type': config['grant_type'],
+    'client_id': config['client_id'],
+    'client_secret': config['client_secret']
 }
 
 r = requests.post(setup, data)
@@ -64,13 +65,52 @@ def results_dogs():
     if request.method == 'POST':
         params = {'type':'Dog'}
 
+        try:
+            if request.form['next']:
+                string = request.form['next']
+
+                params = {}
+
+                v = string.find("?")
+                y = string.find('=')
+
+                first = string[v+1:y]
+                v = string.find("&")
+                first_value = string[y+1:v]
+                params[first] = first_value
+
+
+                string = string[v+1:]
+                while v != -1 and y != -1:
+                    y = string.find("=")
+                    v = string.find("&")
+                    word = string[:y]
+                    value = string[y+1:v]
+                    params[word] = value
+                    
+                    string = string[v+1:]
+
+                if value != string[y+1:]:
+                    params[word] = string[y+1:]
+
+                r = requests.get(dog_search, headers=headers, params=params)
+                v = r.json()
+                v['location'] = params['location']
+                v['distance'] = params['distance']
+
+                return render_template("results_dogs.html", data=v)
+        except:
+            pass
+
         for each in request.form:
             if request.form[each] != '':
                 params[each] = request.form[each]
 
+        print(params)
         r = requests.get(dog_search, headers=headers, params=params)
         v = r.json()
-
+        v['location'] = params['location']
+        v['distance'] = params['distance']
         return render_template("results_dogs.html", data=v)
     else:
         return render_template("home.html")
