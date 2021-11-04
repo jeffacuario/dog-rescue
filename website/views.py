@@ -1,5 +1,6 @@
-from flask import Blueprint, render_template
 from flask import request
+from flask import Blueprint, render_template
+
 import requests
 import json
 
@@ -18,7 +19,7 @@ with open('credentials.json') as config_file:
 
 data = {
     'grant_type': config['grant_type'],
-    'client_id': config['client_id'],
+    'client_id': config['pf_client_id'],
     'client_secret': config['client_secret']
 }
 
@@ -166,3 +167,14 @@ def breeds():
         v = r.json()
 
         return render_template("breeds.html", data=v)
+
+
+
+
+
+# Service start
+# @views.route('/translate', methods=['POST'])
+# def breeds():
+#     if request.method == 'POST':
+        
+        # return render_template("breeds.html", data=v)
