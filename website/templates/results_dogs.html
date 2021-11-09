@@ -135,7 +135,7 @@
 
             <br>
             <ul>
-                <li><strong>Primary Breed:</strong> {{data["animals"][n].breeds['primary']}} <button onclick="myFunction({{n}})">More Info</button></li>
+                <li><strong>Primary Breed:</strong><span id="dog_breed">{{data["animals"][n].breeds['primary']}}</span><button onclick="myFunction({{n}})">More Info</button></li>
                 <li><strong>Secondary Breed:</strong> {{data["animals"][n].breeds['secondary']}}</li>
                 <li><strong>Age:</strong> {{data["animals"][n].age}}</li>
                 <li><strong>Size:</strong> {{data["animals"][n].size}}</li>

@@ -170,11 +170,16 @@ def breeds():
 
 
 
-
-
-# Service start
-# @views.route('/translate', methods=['POST'])
+# # get breed list
+# @views.route('/https://dogs-service-cs361.herokuapp.com/', methods=['POST'])
 # def breeds():
-#     if request.method == 'POST':
-        
-        # return render_template("breeds.html", data=v)
+#     if request.method == 'GET':
+
+#         r = requests.get(breed_list, headers=headers)
+#         v = r.json()
+
+#         return render_template("breeds.html", data=v)
+
+
+
+
