@@ -1,8 +1,8 @@
 /* home page */
 .container {
   max-width: 2000px;
-  justify-content:center;
-  text-align:center;
+  justify-content: center;
+  text-align: center;
 }
 
 form {
@@ -10,85 +10,305 @@ form {
 }
 
 .home_img {
-    height: 500px;
+  height: 500px;
 }
 
 .home_description {
-    max-width: 600px;
-    margin: auto;
-    padding: 10px;
+  max-width: 600px;
+  margin: auto;
+  padding: 10px;
 }
 
-.searchRescueButton{
+.searchRescueButton {
   margin-right: 100px;
 }
 
 /* Rescue page */
 .rescue_section {
-    margin-left: auto;
-    margin-right: auto;
-    display: flex;
-    justify-content: center;
-    text-align: center;
-    flex-wrap: wrap;
-  }
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  flex-wrap: wrap;
+}
 
-  .each_rescue {
-    padding: 10px;
-    min-width: 400px;
-    max-width: 400px;
-    box-sizing: border-box;
-    border: 1px solid black;
-  }
+.each_rescue {
+  padding: 10px;
+  min-width: 400px;
+  max-width: 400px;
+  box-sizing: border-box;
+  border: 1px solid black;
+}
 
 li {
   list-style-type: none;
-
 }
 
 /* dog page */
 .dog_section {
-    max-width: 2000px;
-    margin-left: auto;
-    margin-right: auto;
-    display: flex;
-    justify-content: center;
-    text-align: center;
-    flex-wrap: wrap;
-  }
+  max-width: 2000px;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  flex-wrap: wrap;
+}
 
-  .each_dog {
-    padding: 10px;
-    min-width: 500px;
-    max-width: 500px;
-    box-sizing: border-box;
-    border: 1px solid black;
-  }
+.each_dog {
+  padding: 10px;
+  min-width: 500px;
+  max-width: 500px;
+  box-sizing: border-box;
+  border: 1px solid black;
+}
 
+/* ********************************** */
+/* Hide the text */
 
+#myDIV {
+  width: 100%;
+  padding: 50px 0;
+  text-align: center;
+  background-color: lightblue;
+  margin-top: 20px;
+}
 
-  /* ********************************** */
-  /* Hide the text */
+/* ********************************** */
 
-  #myDIV {
-    width: 100%;
-    padding: 50px 0;
-    text-align: center;
-    background-color: lightblue;
-    margin-top: 20px;
-  }
+/* pagination */
+.pagination {
+  margin-top: 20px;
+  justify-content: center;
+}
 
+.pagination button {
+  margin-left: 50px;
+}
 
+/* **************FILTER PAGE******************** */
+#container-filter {
+  max-width: 400px;
+  justify-content: left;
+  text-align: left;
+}
 
-  /* ********************************** */
+/* #fs_app{
+    padding: 10px 15px 0;
+  } */
 
+#fs_app > section:not(#fs_header_bar) {
+  padding-top: 25px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #eee;
+}
 
-  /* pagination */
-  .pagination {
-    margin-top: 20px;
-    justify-content: center;
-  }
-  
-  .pagination button {
-    margin-left: 50px;
-  }
+#fs_header_bar {
+  padding-top: 25px;
+  padding-bottom: 0;
+}
+
+#fs_page_title {
+  font-size: 15px;
+  font-weight: 500;
+  text-transform: uppercase;
+  margin-left: -15px;
+  margin-top: 6px;
+}
+
+.heading {
+  font-size: 15px;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+.btnPrice {
+  width: 100%;
+  background: transparent;
+  border: 1px solid #ff286c;
+  border-radius: 2px;
+  padding: 3px;
+  color: #ff286c;
+  font-size: 14px;
+  font-weight: 300 !important;
+  margin-top: 15px;
+  margin-bottom: 20px;
+}
+
+.active .btnPrice {
+  background: #ff286c;
+  color: #fff;
+}
+
+#fs_price_body .line1 {
+  height: 2px;
+  width: 100%;
+  background: #eee;
+}
+#fs_price_body .line {
+  position: absolute;
+  height: 2px;
+  width: 45%;
+  background: #ff286c;
+  /* left: 9%; */
+}
+
+#fs_price_body .line:before {
+  position: absolute;
+  content: "";
+  display: block;
+  height: 6px;
+  width: 6px;
+  background: #ff286c;
+  border-radius: 50%;
+  left: -2px;
+  top: -2px;
+}
+
+#fs_price_body .line:after {
+  position: absolute;
+  content: "";
+  display: block;
+  height: 6px;
+  width: 6px;
+  background: #ff286c;
+  border-radius: 50%;
+  right: -2px;
+  bottom: -2px;
+}
+
+#fs_price_body ul {
+  padding: 0;
+  margin-top: 20px;
+  margin-bottom: 0px;
+}
+
+#fs_price_body ul li {
+  display: inline-block;
+  color: #d4d4d4;
+}
+
+#fs_price_body ul li:last-child {
+  float: right;
+}
+
+#fs_distance_body ul {
+  padding: 0;
+  display: block;
+  margin-top: 15px;
+}
+
+#fs_distance_body ul li {
+  /* margin-bottom: 18px; */
+  font-size: 13px;
+  font-weight: 400;
+}
+
+#fs_distance_body .text-right {
+  float: right;
+  height: 13px;
+  width: 13px;
+  border: 1px solid #999;
+  margin-top: 3px;
+}
+
+#fs_distance_body li.active span:first-child {
+  color: #ff286c;
+}
+
+#fs_distance_body li.active span:last-child {
+  background: #ff286c;
+  color: #fff;
+  border: 1px solid #ff286c;
+  font-size: 10px;
+  line-height: 100%;
+  text-align: center;
+}
+
+#fs_time_body ul {
+  padding: 0;
+  display: block;
+  margin-top: 15px;
+}
+
+#fs_time_body ul li {
+  /* margin-bottom: 18px; */
+  font-size: 13px;
+  font-weight: 400;
+}
+
+#fs_time_body .text-right {
+  float: right;
+  height: 13px;
+  width: 13px;
+  border: 1px solid #999;
+  margin-top: 3px;
+}
+
+#fs_time_body li.active span:first-child {
+  color: #ff286c;
+}
+
+#fs_time_body li.active span:last-child {
+  background: #ff286c;
+  color: #fff;
+  border: 1px solid #ff286c;
+  font-size: 10px;
+  line-height: 100%;
+  text-align: center;
+}
+
+#fs_rating ul {
+  padding: 0;
+  display: block;
+  margin-top: 15px;
+}
+
+#fs_rating ul li {
+  /* margin-bottom: 18px; */
+  font-size: 13px;
+  font-weight: 400;
+}
+
+#fs_rating .text-right {
+  float: right;
+  height: 13px;
+  width: 13px;
+  border: 1px solid #999;
+  margin-top: 3px;
+}
+
+#fs_rating i {
+  color: #eee;
+}
+
+#fs_rating i.dark {
+  color: #000;
+}
+
+#fs_rating {
+  border: none !important;
+}
+
+/* SIDE BAR */
+#sidebar {
+  position: fixed;
+  /* width: 30%; */
+  height: fit-content;
+  left: -30%;
+  background-color: #999;
+  /* background-color: #ffffff; */
+}
+
+#sidebar li {
+  color: white;
+  font-size: 30px;
+  padding: 30px;
+  border-bottom: 1px solid gray;
+  text-align: center;
+}
+
+#sidebar.active {
+  left: 0;
+}

@@ -1,0 +1,135 @@
+{% extends "base.html" %} {% block title %}Filter Page{% endblock %}
+
+
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row" id="fs_app">
+        <section class="col-12" id="fs_header_bar">
+            <div class="row">
+                <div class="col-2">
+                    <i class='bx bxs-chevron-left' ></i>
+                </div>
+                <div class="col-10" id="fs_page_title">
+                    Filters
+                </div>
+            </div>
+        </section>
+
+        <section class="col-12" id="fs_price_body">
+            <div>
+                <span class="heading">
+                    By Price
+                </span>
+                <div class="row">
+                    <div class="col-4">
+                        <button class="btn" type="button">&dollar;</button>
+                    </div>
+                    <div class="col-4 active">
+                        <button class="btn" type="button">&dollar;&dollar;</button>
+                    </div>
+                    <div class="col-4 active">
+                        <button class="btn" type="button">&dollar;&dollar;&dollar;</button>
+                    </div>
+                </div>
+                <div class="line"></div>
+                <div class="line1"></div>
+                <div>
+                    <ul>
+                        <li>$25</li>
+                        <li>$50</li>
+                    </ul>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="col-12" id="fs_distance_body">
+            <span class="heading">
+                By Distance
+            </span>
+            <div class="contents">
+                <ul>
+                    <li>
+                        <span>From 1km to 3km</span>
+                        <span class="text-right"></span>
+                    </li>
+                    <li class="active">
+                        <span>From 4km to 7km</span>
+                        <span class="text-right"></span>
+                        <i class='bx bx-check'></i>
+                    </li>
+                    <li>
+                        <span>From 8km to 10km</span>
+                        <span class="text-right"></span>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="col-12" id="fs_time_body">
+            <span class="heading">
+                By Time
+            </span>
+            <div class="contents">
+                <ul>
+                    <li>
+                        <span>Less than 30 Min</span>
+                        <span class="text-right"></span>
+                    </li>
+                    <li>
+                        <span>30 Min - 45 Min</span>
+                        <span class="text-right"></span>
+                    </li>
+                    <li class="active">
+                        <span>45 Min - 55 Min</span>
+                        <span class="text-right"></span>
+                        <i class='bx bx-check'></i>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="col-12" id="fs_rating">
+            <span class="heading">
+                By Rating
+            </span>
+            <div class="contents">
+                <ul>
+                    <li>
+                        <span>
+                            <i class='bx bxs-star dark' ></i>
+                            <i class='bx bxs-star' ></i>
+                            <i class='bx bxs-star' ></i>
+                            <i class='bx bxs-star' ></i>
+                            <i class='bx bxs-star' ></i>
+                        </span>
+                        <span class="text-right"></span>
+                    </li>
+                    <li>
+                        <span>
+                            <i class='bx bxs-star dark' ></i>
+                            <i class='bx bxs-star dark' ></i>
+                            <i class='bx bxs-star' ></i>
+                            <i class='bx bxs-star' ></i>
+                            <i class='bx bxs-star' ></i>
+                        </span>
+                        <span class="text-right"></span>
+                    </li>
+
+                </ul>
+            </div>
+        </section>
+
+
+
+
+    </div>
+</div>
+
+
+
+
+{% endblock %}
+
+

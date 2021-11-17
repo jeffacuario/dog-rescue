@@ -4,80 +4,359 @@
 {% block content %}
 <br>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="collapse navbar-collapse" id="navbarText">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <a class="nav-link btn btn-warning" href="#">Filter</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link">Sort by:</a>
-        </li>
-        <li>
-            <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Dropdown button
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="#">Nearest</a>
-                <a class="dropdown-item" href="#">Furthest</a>
-                <a class="dropdown-item" href="#">Alphabetical</a>
-                </div>
-            </div>
-        </li>
-
+    <li class="nav-item active">
+        <a class="nav-link btn btn-warning" href="#" onclick="togglemenu()">Filter</a>
         
-        <li class="nav-item">
-            <!-- Button trigger modal Search Dogs-->
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#searchDogsModal">
-                New Search
-            </button>
+        <div id="sidebar">
+            <div class="container-fluid" id="container-filter">
+                <div class="row" id="fs_app">
+                    <section class="col-12" id="fs_header_bar">
+                        <div class="row">
+                            <div class="col-2">
+                                <button class="btn" type="button"><i class='bx bxs-chevron-left' onclick="togglemenu()"></i></button>
+                            </div>
+                            <div class="col-10" id="fs_page_title">
+                                Filters
+                            </div>
+                        </div>
+                    </section>
+            
+                    <!-- Primary breed, secondary breed, age, gender -->
 
-    <!-- Modal -->
-    <div class="modal fade" id="searchDogsModal" tabindex="-1" role="dialog" aria-labelledby="searchDogsModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                <h5 class="modal-title" id="searchDogsModalLabel">Search for dogs</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                </div>
-                <div class="modal-body">
-                    <form action="/dogs" method="post">
-                        <!-- TODO need a check for location (validation) -->
-                        <div class="mb-3">
-                            <label for="location" class="form-label">Location*</label>
-                            <input type="number" class="form-control" id="location" aria-describedby="locationHelp" name="location" placeholder="Enter Zip Code" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="distance" class="form-label">Distance</label>
-                            <input type="number" class="form-control" id="distance" aria-describedby="distanceHelp" name="distance" placeholder="Enter Miles">
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label for="breed" class="form-label">Breed</label>
-                            <input type="text" class="form-control" id="breed" aria-describedby="breedHelp" name="breed" placeholder="Enter Breed">
-                        </div>
+                    <section class="col-12" id="fs_distance_body">
 
-                        <div class="mb-3">
-                            <label for="age" class="form-label">Age</label>
-                            <input type="text" class="form-control" id="age" aria-describedby="ageHelp" name="age" placeholder="Enter Age">
+                        <div class="btn-group">
+                            <div class="accordion" id="accordionExample">
+                                <div class="card">
+                                  <div class="card-header" id="headingOne">
+                                    <h2 class="mb-0">
+                                      <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                        By Primary Breed
+                                      </button>
+                                    </h2>
+                                  </div>
+                              
+                                  <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                    <div class="card-body">
+                                      Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="card">
+                                  <div class="card-header" id="headingTwo">
+                                    <h2 class="mb-0">
+                                      <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                        By Secondary Breed
+                                      </button>
+                                    </h2>
+                                  </div>
+                                  <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                                    <div class="card-body">
+                                      Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="card">
+                                  <div class="card-header" id="headingThree">
+                                    <h2 class="mb-0">
+                                      <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                        By Age
+                                      </button>
+                                    </h2>
+                                  </div>
+                                  <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                                    <div class="card-body">
+                                      Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="card">
+                                  <div class="card-header" id="headingThree">
+                                    <h2 class="mb-0">
+                                      <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                        By Gender
+                                      </button>
+                                    </h2>
+                                  </div>
+                                  <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+                                    <div class="card-body">
+                                      Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                    </section>
+
+                    <!-- <section class="col-12" id="fs_distance_body">
+                        <span class="heading">
+                            By Secondary breed
+                        </span>
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <form action="/dogs" method="post">
+                                    <input class="form-check-input" type="text" name="params" id="params" value="{{data['params']}}" style="display: none">
+
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="sortSelection" id="newest" value="Newest">
+                                        <label class="form-check-label" for="newest">
+                                            Newest
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="sortSelection" id="oldest" value="Oldest">
+                                        <label class="form-check-label" for="oldest">
+                                            Oldest
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="sortSelection" id="nearest" value="Nearest">
+                                        <label class="form-check-label" for="nearest">
+                                            Nearest
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="sortSelection" id="furthest" value="Furthest">
+                                        <label class="form-check-label" for="furthest">
+                                            Furthest
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="sortSelection" id="random" value="Random">
+                                        <label class="form-check-label" for="random">
+                                            Random
+                                        </label>
+                                    </div>
+                                        <button type="submit" class="btn btn-primary" style="margin-left: 25px;">Sort</button>
+                                </form>
+                            </div>
                         </div>
-                        <div class="mb-3">
-                            <label for="gender" class="form-label">Gender</label>
-                            <input type="text" class="form-control" id="gender" aria-describedby="genderHelp" name="gender" placeholder="Enter Gender">
+                    </section>
+
+                    <section class="col-12" id="fs_distance_body">
+                        <span class="heading">
+                            By Age
+                        </span>
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <form action="/dogs" method="post">
+                                    <input class="form-check-input" type="text" name="params" id="params" value="{{data['params']}}" style="display: none">
+
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="sortSelection" id="newest" value="Newest">
+                                        <label class="form-check-label" for="newest">
+                                            Newest
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="sortSelection" id="oldest" value="Oldest">
+                                        <label class="form-check-label" for="oldest">
+                                            Oldest
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="sortSelection" id="nearest" value="Nearest">
+                                        <label class="form-check-label" for="nearest">
+                                            Nearest
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="sortSelection" id="furthest" value="Furthest">
+                                        <label class="form-check-label" for="furthest">
+                                            Furthest
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="sortSelection" id="random" value="Random">
+                                        <label class="form-check-label" for="random">
+                                            Random
+                                        </label>
+                                    </div>
+                                        <button type="submit" class="btn btn-primary" style="margin-left: 25px;">Sort</button>
+                                </form>
+                            </div>
                         </div>
-                        <div id="note" class="form-text">Note: Filling out more fields allows us to better find your perfect dog</div>
-                        <br>
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </form>
+                    </section>
+
+                    <section class="col-12" id="fs_distance_body">
+                        <span class="heading">
+                            By Gender
+                        </span>
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <form action="/dogs" method="post">
+                                    <input class="form-check-input" type="text" name="params" id="params" value="{{data['params']}}" style="display: none">
+
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="sortSelection" id="newest" value="Newest">
+                                        <label class="form-check-label" for="newest">
+                                            Newest
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="sortSelection" id="oldest" value="Oldest">
+                                        <label class="form-check-label" for="oldest">
+                                            Oldest
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="sortSelection" id="nearest" value="Nearest">
+                                        <label class="form-check-label" for="nearest">
+                                            Nearest
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="sortSelection" id="furthest" value="Furthest">
+                                        <label class="form-check-label" for="furthest">
+                                            Furthest
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="sortSelection" id="random" value="Random">
+                                        <label class="form-check-label" for="random">
+                                            Random
+                                        </label>
+                                    </div>
+                                        <button type="submit" class="btn btn-primary" style="margin-left: 25px;">Sort</button>
+                                </form>
+                            </div>
+                        </div>
+                    </section> -->
+            
                 </div>
             </div>
         </div>
-    </div>
-
-
+    </li>
     <li class="nav-item">
+        <a class="nav-link">Sort by:</a>
+    </li>
+    <li>
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <form action="/dogs" method="post">
+                    <input class="form-check-input" type="text" name="params" id="params" value="{{data['params']}}" style="display: none">
+
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="sortSelection" id="newest" value="Newest">
+                        <label class="form-check-label" for="newest">
+                            Newest
+                        </label>
+                      </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="sortSelection" id="oldest" value="Oldest">
+                        <label class="form-check-label" for="oldest">
+                            Oldest
+                        </label>
+                      </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="sortSelection" id="nearest" value="Nearest">
+                        <label class="form-check-label" for="nearest">
+                            Nearest
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="sortSelection" id="furthest" value="Furthest">
+                        <label class="form-check-label" for="furthest">
+                            Furthest
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="sortSelection" id="random" value="Random">
+                        <label class="form-check-label" for="random">
+                            Random
+                        </label>
+                      </div>
+                        <button type="submit" class="btn btn-primary" style="margin-left: 25px;">Sort</button>
+                </form>
+            </div>
+        </div>
+    </li>
+
+    
+    <li class="nav-item" style="margin-left: 15px;">
+        <!-- Button trigger modal Search Dogs-->
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#searchDogsModal">
+            New Search
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="searchDogsModal" tabindex="-1" role="dialog" aria-labelledby="searchDogsModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="searchDogsModalLabel">Search for dogs</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="/dogs" method="post">
+                            <!-- TODO need a check for location (validation) -->
+                            <div class="mb-3">
+                                <label for="location" class="form-label">Location*</label>
+                                <input type="number" class="form-control" id="location" aria-describedby="locationHelp" name="location" placeholder="Enter Zip Code" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="distance" class="form-label">Distance</label>
+                                <input type="number" class="form-control" id="distance" aria-describedby="distanceHelp" name="distance" placeholder="Enter Miles">
+                            </div>
+                            <!-- <div class="mb-3">
+                                <label for="breed" class="form-label">Breed</label>
+                                <input type="text" class="form-control" id="breed" aria-describedby="breedHelp" name="breed" placeholder="Enter Breed">
+                            </div> -->
+                            
+                            <div class="mb-3">
+                                <label for="breed" class="form-label">Breed</label>
+                                <br>
+                                <input list="breed_list" name="breed" id="breed" class="form-control" placeholder="Select Breed">
+                                <datalist id="breed_list">
+                                    {% for n in data["breeds"] %}
+                                        <option value="{{n.name}}"></option>
+                                    {% endfor %}
+                                </datalist>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="age" class="form-label">Age</label>
+                                <!-- <input type="text" class="form-control" id="age" aria-describedby="ageHelp" name="age" placeholder="Enter Age"> -->
+                                <br>
+                                <input list="age_list" name="age" id="age" class="form-control" placeholder="Select Age">
+                                <datalist id="age_list">
+                                    <option value="baby"></option>
+                                    <option value="young"></option>
+                                    <option value="adult"></option>
+                                    <option value="senior"></option>
+                                </datalist>
+                            </div>
+    
+                            <!-- male, female, unknown Accepts multiple values, e.g. gender=male,female -->
+                            <div class="mb-3">
+                                <label for="gender" class="form-label">Gender</label>
+                                <!-- <input type="text" class="form-control" id="gender" aria-describedby="genderHelp" name="gender" placeholder="Enter Gender"> -->
+                                <br>
+                                <input list="gender_list" name="gender" id="gender" class="form-control" placeholder="Select Gender">
+                                <datalist id="gender_list">
+                                    <option value="male"></option>
+                                    <option value="female"></option>
+                                    <option value="unknown"></option>
+                                </datalist>
+                            </div>
+    
+                            <div id="note" class="form-text">Note: Filling out more fields allows us to better find your perfect dog</div>
+                            <br>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </li>
+
+
+    <li class="nav-item" style="margin-left: 15px;">
         <!-- Button trigger modal Search Rescues-->
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#searchRescueModal">
             Search Rescues
@@ -114,11 +393,15 @@
                 </div>
             </div>
         </div>
-  </nav>
+    </li>
+</nav>
 
-
-<h3>{{data['pagination'].total_count}} Available Dogs {{data['distance']}} miles from {{data['location']}}:</h3>
-
+{% if data["sorted"] %}
+    <h3>{{data['pagination'].total_count}} Available Dogs {{data['distance']}} miles from {{data['location']}}
+        <br>Sorted by: {{data['sorted']}}</h3>
+{%else%}
+    <h3>{{data['pagination'].total_count}} Available Dogs {{data['distance']}} miles from {{data['location']}}  <br>Sorted by: Newest</h3></h3>
+{% endif %}
 
     <div class="dog_section">
         {% for n in range(data["animals"]| length) %}
@@ -135,17 +418,16 @@
 
             <br>
             <ul>
-                <li><strong>Primary Breed:</strong><span id="dog_breed">{{data["animals"][n].breeds['primary']}}</span><button onclick="myFunction({{n}})">More Info</button></li>
+                <li><strong>Primary Breed:</strong><span id="dog_breed"> {{data["animals"][n].breeds['primary']}} </span><button onclick="myFunction({{n}})">More Info</button></li>
                 <li><strong>Secondary Breed:</strong> {{data["animals"][n].breeds['secondary']}}</li>
                 <li><strong>Age:</strong> {{data["animals"][n].age}}</li>
                 <li><strong>Size:</strong> {{data["animals"][n].size}}</li>
                 <li><strong>Gender:</strong> {{data["animals"][n].gender}}</li>
+                <li><strong>Distance:</strong> {{data["animals"][n].distance}} miles</li>
+                <li><strong>Added:</strong> {{data["animals"][n].published_at}}</li>
             </ul>
 
-            <p id={{n}} style="display:none;">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempore debitis vitae temporibus, fugit omnis necessitatibus nulla itaque recusandae quis expedita nostrum at doloribus officiis accusamus ea vero sapiente aspernatur perspiciatis.
-            Officiis eligendi incidunt voluptates, quia beatae ipsam enim, repudiandae totam sunt dolor corporis illo aspernatur nisi facere dicta suscipit ea? Suscipit, similique. Ratione blanditiis quis in perferendis delectus quos dolorem.
-            Ipsa eligendi officia corrupti exercitationem perspiciatis corporis delectus nulla, quae architecto, reprehenderit dolore? Eveniet necessitatibus natus soluta ea, ratione tempore repellendus atque accusamus? Eaque ab nisi maxime in tempore deserunt!
-            </p>
+            <p id={{n}} style="display:none;"></p>
 
         </div>
 
@@ -174,4 +456,7 @@
         {% endif %}
     </div>
     {% endif %}
+
+
+    
 {% endblock %}

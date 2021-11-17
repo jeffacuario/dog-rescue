@@ -1,8 +1,18 @@
 import requests
 
-BASE = "http://127.0.0.1:5000/"
+BASE = "https://mighty-wave-93567.herokuapp.com/"
+BASE2 = "https://mighty-wave-93567.herokuapp.com/translate"
+
+# BASE2 = "http://localhost:5000/translate"
+
+# response = requests.get(BASE)
+# print(response.text)
+
+# response_2 = requests.get(BASE2)
+# print(response_2.text)
+
+response_3 = requests.post(BASE2, {"input_text": "Hello, my name is Jeffrey", "text_language": "Spanish", "translated_language":"Spanish"})
+# print(response_3)
 
 
-# response = requests.post(BASE + "translate", {"input_text": "Me gustan los tacos", "text_language": "Spanish", "translated_language":"English"})
-response = requests.post(BASE + "translate", {"input_text": "I like tacos", "text_language": "Spanish", "translated_language":"Spanish"})
-print(response.json())
+print(response_3.json())

@@ -92,18 +92,48 @@
                                 <label for="distance" class="form-label">Distance</label>
                                 <input type="number" class="form-control" id="distance" aria-describedby="distanceHelp" name="distance" placeholder="Enter Miles">
                             </div>
-                            <div class="mb-3">
+                            <!-- <div class="mb-3">
                                 <label for="breed" class="form-label">Breed</label>
                                 <input type="text" class="form-control" id="breed" aria-describedby="breedHelp" name="breed" placeholder="Enter Breed">
+                            </div> -->
+                            
+                            <div class="mb-3">
+                                <label for="breed" class="form-label">Breed</label>
+                                <br>
+                                <input list="breed_list" name="breed" id="breed" class="form-control" placeholder="Select Breed">
+                                <datalist id="breed_list">
+                                    {% for n in data["breeds"] %}
+                                        <option value="{{n.name}}"></option>
+                                    {% endfor %}
+                                </datalist>
                             </div>
+                            
                             <div class="mb-3">
                                 <label for="age" class="form-label">Age</label>
-                                <input type="text" class="form-control" id="age" aria-describedby="ageHelp" name="age" placeholder="Enter Age">
+                                <!-- <input type="text" class="form-control" id="age" aria-describedby="ageHelp" name="age" placeholder="Enter Age"> -->
+                                <br>
+                                <input list="age_list" name="age" id="age" class="form-control" placeholder="Select Age">
+                                <datalist id="age_list">
+                                    <option value="baby"></option>
+                                    <option value="young"></option>
+                                    <option value="adult"></option>
+                                    <option value="senior"></option>
+                                </datalist>
                             </div>
+    
+                            <!-- male, female, unknown Accepts multiple values, e.g. gender=male,female -->
                             <div class="mb-3">
                                 <label for="gender" class="form-label">Gender</label>
-                                <input type="text" class="form-control" id="gender" aria-describedby="genderHelp" name="gender" placeholder="Enter Gender">
+                                <!-- <input type="text" class="form-control" id="gender" aria-describedby="genderHelp" name="gender" placeholder="Enter Gender"> -->
+                                <br>
+                                <input list="gender_list" name="gender" id="gender" class="form-control" placeholder="Select Gender">
+                                <datalist id="gender_list">
+                                    <option value="male"></option>
+                                    <option value="female"></option>
+                                    <option value="unknown"></option>
+                                </datalist>
                             </div>
+    
                             <div id="note" class="form-text">Note: Filling out more fields allows us to better find your perfect dog</div>
                             <br>
                             <button type="submit" class="btn btn-primary">Submit</button>
