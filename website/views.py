@@ -59,6 +59,7 @@ def results_rescues():
             }
             
         r = requests.get(rescue_search, headers=headers, params=params)
+        print(r.url)
         v = r.json()
 
         v['distance'] = params['distance']
@@ -69,68 +70,22 @@ def results_rescues():
     else:
         return render_template("home.html")
 
-# TODO testing dog sidebar
+
 @views.route('/dogs', methods=['POST'])
 def results_dogs():
     if request.method == 'POST':
         # handle sort
-        try:
-            # recent, -recent, distance (clostest), -distance (furthest), random (default: recent)
-            if request.form['sortSelection']:
-                print("*******",request.form['sortSelection'])
-                newParams = {}
-                jsonParams = eval(request.form['params'])
-                for p in jsonParams:
-                    newParams[p] = jsonParams[p]
-
-
-                if request.form['sortSelection'] == 'Newest':
-                    newParams['sort'] = 'recent'
-                if request.form['sortSelection'] == 'Oldest':
-                    newParams['sort'] = '-recent'
-                elif request.form['sortSelection'] == 'Nearest':
-                    newParams['sort'] = 'distance'
-                elif request.form['sortSelection'] == 'Furthest':
-                    newParams['sort'] = '-distance'
-                elif request.form['sortSelection'] == 'Random':
-                    newParams['sort'] = 'random'
-
-                # newParams['sorted'] = request.form['sortSelection']
-                print(newParams)
-                
-                
-            r = requests.get(dog_search, headers=headers, params=newParams)
-            v = r.json()
-            v['location'] = newParams['location']
-            v['distance'] = newParams['distance']
-            # v['primaryBreeds'] = primaryBreeds
-            # v['secondaryBreeds'] = secondaryBreeds
-            v['params'] = newParams
-            v['sorted'] = request.form['sortSelection']
-        
-            # for breed in v['animals']:
-            #     prim = breed['breeds']['primary']
-            #     sec = breed['breeds']['secondary']
-            #     if prim not in primaryBreeds:
-            #         primaryBreeds.append(prim)
-            #     if sec not in secondaryBreeds:
-            #         secondaryBreeds.append(sec)
+        if 'sortSelection' in request.form:
+            v = dogSort(request)
             return render_template("results_dogs.html", data=v)
-        except:
-            pass
 
-        # print(request.form['sortSelection'])
-        # print(request.form['params'])
+        # handle pagination
+        if 'next' in request.form:
+            v = pagination_check(dog_search, request)
+            return render_template("results_dogs.html", data=v)
 
 
-        primaryBreeds = []
-        secondaryBreeds = []
         params = {'type':'Dog'}
-
-        try:
-            return pagination_check(dog_search, "results_dogs.html")
-        except:
-            pass
 
         for each in request.form:
             if request.form[each] != '':
@@ -139,23 +94,8 @@ def results_dogs():
         if request.form['distance'] == '':
             params["distance"] = 0
             
-        print(params)
         r = requests.get(dog_search, headers=headers, params=params)
-        v = r.json()
-        v['location'] = params['location']
-        v['distance'] = params['distance']
-        v['primaryBreeds'] = primaryBreeds
-        v['secondaryBreeds'] = secondaryBreeds
-        v['params'] = params
-        v['breeds'] = breeds()['breeds']
-    
-        for breed in v['animals']:
-            prim = breed['breeds']['primary']
-            sec = breed['breeds']['secondary']
-            if prim not in primaryBreeds:
-                primaryBreeds.append(prim)
-            if sec not in secondaryBreeds:
-                secondaryBreeds.append(sec)
+        v = dicParams(r.json(), params)
 
         return render_template("results_dogs.html", data=v)
     else:
@@ -164,8 +104,8 @@ def results_dogs():
 
 # get breed list
 def breeds():
-    # if request.method == 'GET':
     r = requests.get(breed_list, headers=headers)
+    print(r.url)
     v = r.json()
     return v
 
@@ -182,49 +122,100 @@ def filter():
 def sidebar():
     return render_template("sidebar.html")
 
-# TODO delete later
-@views.route('/result', methods=['POST'])
-def result():
-    if request.method == 'POST':
-        print(request.form)
-        print(request.form['sortSelection'])
-        print(request.form['params'])
 
-        return render_template("result.html")
+def pagination_check(type_search, request):
+    string = request.form['next']
+
+    params = {}
+
+    v = string.find("?")
+    y = string.find('=')
+
+    first = string[v+1:y]
+    v = string.find("&")
+    first_value = string[y+1:v]
+    params[first] = first_value
 
 
-
-def pagination_check(type_search, template):
-    if request.form['next']:
-        string = request.form['next']
-
-        params = {}
-
-        v = string.find("?")
-        y = string.find('=')
-
-        first = string[v+1:y]
+    string = string[v+1:]
+    while v != -1 and y != -1:
+        y = string.find("=")
         v = string.find("&")
-        first_value = string[y+1:v]
-        params[first] = first_value
-
-
+        word = string[:y]
+        value = string[y+1:v]
+        params[word] = value
+        
         string = string[v+1:]
-        while v != -1 and y != -1:
-            y = string.find("=")
-            v = string.find("&")
-            word = string[:y]
-            value = string[y+1:v]
-            params[word] = value
-            
-            string = string[v+1:]
 
-        if value != string[y+1:]:
-            params[word] = string[y+1:]
+    if value != string[y+1:]:
+        params[word] = string[y+1:]
 
-        r = requests.get(type_search, headers=headers, params=params)
-        v = r.json()
-        v['location'] = params['location']
-        v['distance'] = params['distance']
+    r = requests.get(type_search, headers=headers, params=params)
+    v = dicParams(r.json(), params)
 
-        return render_template(template, data=v)
+    return v
+
+def dogSort(request):
+    print("This is the request:", request)
+    print("Request list:", request.form)
+    newParams = {}
+    jsonParams = eval(request.form['params'])
+    for p in jsonParams:
+        newParams[p] = jsonParams[p]
+
+
+    if request.form['sortSelection'] == 'Newest':
+        newParams['sort'] = 'recent'
+    if request.form['sortSelection'] == 'Oldest':
+        newParams['sort'] = '-recent'
+    elif request.form['sortSelection'] == 'Nearest':
+        newParams['sort'] = 'distance'
+    elif request.form['sortSelection'] == 'Furthest':
+        newParams['sort'] = '-distance'
+    elif request.form['sortSelection'] == 'Random':
+        newParams['sort'] = 'random'
+
+    print(newParams)
+    r = requests.get(dog_search, headers=headers, params=newParams)
+
+    v = dicParams(r.json(), newParams)
+    v['sorted'] = request.form['sortSelection']
+
+    return v
+
+def dicParams(v, params):
+    primaryBreeds = []
+    secondaryBreeds = []
+    ages = []
+    sizes = []
+    genders = []
+
+    v['location'] = params['location']
+    v['distance'] = params['distance']
+    v['primaryBreeds'] = primaryBreeds
+    v['secondaryBreeds'] = secondaryBreeds
+    v['age'] = ages
+    v['size'] = sizes
+    v['gender'] = genders
+    v['params'] = params
+    v['breeds'] = breeds()['breeds']
+
+    for attrib in v['animals']:
+        prim = attrib['breeds']['primary']
+        sec = attrib['breeds']['secondary']
+        age = attrib['age']
+        size = attrib['size']
+        gender = attrib['gender']
+        
+        if prim not in primaryBreeds:
+            primaryBreeds.append(prim)
+        if sec not in secondaryBreeds:
+            secondaryBreeds.append(sec)
+        if age not in ages:
+            ages.append(age)
+        if size not in sizes:
+            sizes.append(size)
+        if gender not in genders:
+            genders.append(gender)
+
+    return v

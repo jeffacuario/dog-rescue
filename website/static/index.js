@@ -1,4 +1,4 @@
-function myFunction(name) {
+function dogDescription(name) {
   var y =
     document.getElementById(name).previousElementSibling.childNodes[1]
       .childNodes[1].innerHTML;
@@ -31,4 +31,42 @@ function myFunction(name) {
 
 function togglemenu() {
   document.getElementById("sidebar").classList.toggle("active");
+}
+
+function filterDogs() {
+  const checkedPrimary = [];
+  var cardPrimary = document.getElementById('cardPrimary').children;
+  // console.log(cardPrimary);
+
+  
+  for (var each in cardPrimary) {
+    if(cardPrimary[each].children){
+      if(cardPrimary[each].children[0].checked == true){
+        checkedPrimary.push(cardPrimary[each].children[0].value)
+      }
+    }
+  }
+
+  // console.log(checkedPrimary);
+  var dogSection = document.getElementsByClassName("dog_section")[0].children;
+  for (var eachDog in dogSection) {
+
+    if(dogSection[eachDog].children){
+      var dogBreed = dogSection[eachDog].children[3].children[0].children[1].innerHTML.trim();
+      var block = dogSection[eachDog];
+
+      if (checkedPrimary.includes(dogBreed) == false){
+        // console.log(dogSection[eachDog].children)
+        // console.log(block);
+        block.style.display = "none";
+      }
+      else if (checkedPrimary.includes(dogBreed) == true) {
+        if((block.style.display == "none")==true){
+          block.style.display = "block";
+        }
+      }
+    }
+  }
+
+
 }

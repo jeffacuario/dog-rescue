@@ -133,6 +133,23 @@
                                     <option value="unknown"></option>
                                 </datalist>
                             </div>
+
+                            <div class="mb-3">
+                                <label for="limit" class="form-label">Results per page</label>
+                                <br />
+                                <input
+                                  list="num_results_list"
+                                  name="limit"
+                                  id="limit"
+                                  class="form-control"
+                                  placeholder="Select Number of Results to Display"
+                                />
+                                <datalist id="num_results_list">
+                                  <option value="20"></option>
+                                  <option value="50"></option>
+                                  <option value="100"></option>
+                                </datalist>
+                              </div>
     
                             <div id="note" class="form-text">Note: Filling out more fields allows us to better find your perfect dog</div>
                             <br>

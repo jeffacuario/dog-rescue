@@ -1,129 +1,240 @@
-{% extends "base.html" %} {% block title %}Dog Rescue{% endblock %}
-
-{% block content %}
-
-
+{% extends "base.html" %} {% block title %}Dog Rescue{% endblock %} {% block
+content %}
 
 <section class="home_page">
-    <!-- <h1>{{data}}</h1> -->
-    <h3>Dog rescue webapp!</h3>
-    <img src="{{ url_for('static', filename='kermit.JPG') }}" alt="" class="home_img">
+  <!-- <h1>{{data}}</h1> -->
+  <h3>Dog rescue webapp!</h3>
+  <img
+    src="{{ url_for('static', filename='kermit.JPG') }}"
+    alt=""
+    class="home_img"
+  />
 
-    <p class="home_description">
-        Hello and welcome! Looking for a dog or a local rescue? Click on the one of the buttons below for which one you are looking for and we will show you what is available!
-    </p>
+  <p class="home_description">
+    Hello and welcome! Looking for a dog or a local rescue? Click on the one of
+    the buttons below for which one you are looking for and we will show you
+    what is available!
+  </p>
 
-    <!-- Button trigger modal Search Rescues-->
-    <button type="button" class="btn btn-primary searchRescueButton" data-toggle="modal" title="Shows local rescues based on location and distance" data-target="#searchRescueModal">
-        Search for rescues
-    </button>
-    
-    <!-- Modal -->
-    <div class="modal fade" id="searchRescueModal" tabindex="-1" role="dialog" aria-labelledby="searchRescueModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                <h5 class="modal-title" id="searchRescueModalLabel">Search for rescues</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                </div>
-                <div class="modal-body">
-                    <form action="/rescues" method="post">
-                        <div class="mb-3">
-                            <label for="location" class="form-label">Location*</label>
-                            <input type="number" class="form-control" id="location" aria-describedby="locationHelp" name="location" placeholder="Enter Zip Code" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="distance" class="form-label">Distance</label>
-                            <input type="number" class="form-control" id="distance" aria-describedby="distanceHelp" name="distance" placeholder="Enter Miles">
-                        </div>
-                        <div id="note" class="form-text">Note: Increasing distance will show more results</div>
-                        <br>
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </form>
+  <!-- Button trigger modal Search Rescues-->
+  <button
+    type="button"
+    class="btn btn-primary searchRescueButton"
+    data-toggle="modal"
+    title="Shows local rescues based on location and distance"
+    data-target="#searchRescueModal"
+  >
+    Search for rescues
+  </button>
 
-                </div>
-            </div>
+  <!-- Modal -->
+  <div
+    class="modal fade"
+    id="searchRescueModal"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="searchRescueModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="searchRescueModalLabel">
+            Search for rescues
+          </h5>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
+        <div class="modal-body">
+          <form action="/rescues" method="post">
+            <div class="mb-3">
+              <label for="location" class="form-label">Location*</label>
+              <input
+                type="number"
+                class="form-control"
+                id="location"
+                aria-describedby="locationHelp"
+                name="location"
+                placeholder="Enter Zip Code"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label for="distance" class="form-label">Distance</label>
+              <input
+                type="number"
+                class="form-control"
+                id="distance"
+                aria-describedby="distanceHelp"
+                name="distance"
+                placeholder="Enter Miles"
+              />
+            </div>
+            <div id="note" class="form-text">
+              Note: Increasing distance will show more results
+            </div>
+            <br />
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+        </div>
+      </div>
     </div>
+  </div>
 
-    <!-- Button trigger modal Search Dogs-->
-    
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-toggle="tooltip" title="Search for dogs based on location, distance, breed, age, etc" data-target="#searchDogsModal">
-        Search for dogs
-    </button>
-    
-    <!-- Modal -->
-    <div class="modal fade" id="searchDogsModal" tabindex="-1" role="dialog" aria-labelledby="searchDogsModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                <h5 class="modal-title" id="searchDogsModalLabel">Search for dogs</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                </div>
-                <div class="modal-body">
-                    <form action="/dogs" method="post">
-                        <!-- TODO need a check for location (validation) -->
-                        <div class="mb-3">
-                            <label for="location" class="form-label">Location*</label>
-                            <input type="number" class="form-control" id="location" aria-describedby="locationHelp" name="location" placeholder="Enter Zip Code" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="distance" class="form-label">Distance</label>
-                            <input type="number" class="form-control" id="distance" aria-describedby="distanceHelp" name="distance" placeholder="Enter Miles">
-                        </div>
-                        <!-- <div class="mb-3">
+  <!-- Button trigger modal Search Dogs-->
+
+  <button
+    type="button"
+    class="btn btn-primary"
+    data-toggle="modal"
+    data-toggle="tooltip"
+    title="Search for dogs based on location, distance, breed, age, etc"
+    data-target="#searchDogsModal"
+  >
+    Search for dogs
+  </button>
+
+  <!-- Modal -->
+  <div
+    class="modal fade"
+    id="searchDogsModal"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="searchDogsModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="searchDogsModalLabel">Search for dogs</h5>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form action="/dogs" method="post">
+            <!-- TODO need a check for location (validation) -->
+            <div class="mb-3">
+              <label for="location" class="form-label">Location*</label>
+              <input
+                type="number"
+                class="form-control"
+                id="location"
+                aria-describedby="locationHelp"
+                name="location"
+                placeholder="Enter Zip Code"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label for="distance" class="form-label">Distance</label>
+              <input
+                type="number"
+                class="form-control"
+                id="distance"
+                aria-describedby="distanceHelp"
+                name="distance"
+                placeholder="Enter Miles"
+              />
+            </div>
+            <!-- <div class="mb-3">
                             <label for="breed" class="form-label">Breed</label>
                             <input type="text" class="form-control" id="breed" aria-describedby="breedHelp" name="breed" placeholder="Enter Breed">
                         </div> -->
-                        
-                        <div class="mb-3">
-                            <label for="breed" class="form-label">Breed</label>
-                            <br>
-                            <input list="breed_list" name="breed" id="breed" class="form-control" placeholder="Select Breed">
-                            <datalist id="breed_list">
-                                {% for n in data["breeds"] %}
-                                    <option value="{{n.name}}"></option>
-                                {% endfor %}
-                            </datalist>
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label for="age" class="form-label">Age</label>
-                            <!-- <input type="text" class="form-control" id="age" aria-describedby="ageHelp" name="age" placeholder="Enter Age"> -->
-                            <br>
-                            <input list="age_list" name="age" id="age" class="form-control" placeholder="Select Age">
-                            <datalist id="age_list">
-                                <option value="baby"></option>
-                                <option value="young"></option>
-                                <option value="adult"></option>
-                                <option value="senior"></option>
-                            </datalist>
-                        </div>
 
-                        <!-- male, female, unknown Accepts multiple values, e.g. gender=male,female -->
-                        <div class="mb-3">
-                            <label for="gender" class="form-label">Gender</label>
-                            <!-- <input type="text" class="form-control" id="gender" aria-describedby="genderHelp" name="gender" placeholder="Enter Gender"> -->
-                            <br>
-                            <input list="gender_list" name="gender" id="gender" class="form-control" placeholder="Select Gender">
-                            <datalist id="gender_list">
-                                <option value="male"></option>
-                                <option value="female"></option>
-                                <option value="unknown"></option>
-                            </datalist>
-                        </div>
-
-                        <div id="note" class="form-text">Note: Filling out more fields allows us to better find your perfect dog</div>
-                        <br>
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </form>
-                </div>
+            <div class="mb-3">
+              <label for="breed" class="form-label">Breed</label>
+              <br />
+              <input
+                list="breed_list"
+                name="breed"
+                id="breed"
+                class="form-control"
+                placeholder="Select Breed"
+              />
+              <datalist id="breed_list">
+                {% for n in data["breeds"] %}
+                <option value="{{n.name}}"></option>
+                {% endfor %}
+              </datalist>
             </div>
+
+            <div class="mb-3">
+              <label for="age" class="form-label">Age</label>
+              <!-- <input type="text" class="form-control" id="age" aria-describedby="ageHelp" name="age" placeholder="Enter Age"> -->
+              <br />
+              <input
+                list="age_list"
+                name="age"
+                id="age"
+                class="form-control"
+                placeholder="Select Age"
+              />
+              <datalist id="age_list">
+                <option value="baby"></option>
+                <option value="young"></option>
+                <option value="adult"></option>
+                <option value="senior"></option>
+              </datalist>
+            </div>
+
+            <!-- male, female, unknown Accepts multiple values, e.g. gender=male,female -->
+            <div class="mb-3">
+              <label for="gender" class="form-label">Gender</label>
+              <!-- <input type="text" class="form-control" id="gender" aria-describedby="genderHelp" name="gender" placeholder="Enter Gender"> -->
+              <br />
+              <input
+                list="gender_list"
+                name="gender"
+                id="gender"
+                class="form-control"
+                placeholder="Select Gender"
+              />
+              <datalist id="gender_list">
+                <option value="male"></option>
+                <option value="female"></option>
+                <option value="unknown"></option>
+              </datalist>
+            </div>
+
+            <div class="mb-3">
+              <label for="limit" class="form-label">Results per page</label>
+              <br />
+              <input
+                list="num_results_list"
+                name="limit"
+                id="limit"
+                class="form-control"
+                placeholder="Select Number of Results to Display"
+              />
+              <datalist id="num_results_list">
+                <option value="20"></option>
+                <option value="50"></option>
+                <option value="100"></option>
+              </datalist>
+            </div>
+
+            <div id="note" class="form-text">
+              Note: Filling out more fields allows us to better find your
+              perfect dog
+            </div>
+            <br />
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
         </div>
+      </div>
     </div>
+  </div>
 </section>
 {% endblock %}

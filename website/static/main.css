@@ -81,6 +81,7 @@ li {
 .pagination {
   margin-top: 20px;
   justify-content: center;
+  margin-right: 40px;
 }
 
 .pagination button {
@@ -294,7 +295,7 @@ li {
 /* SIDE BAR */
 #sidebar {
   position: fixed;
-  /* width: 30%; */
+  width: 30%;
   height: fit-content;
   left: -30%;
   background-color: #999;
@@ -312,3 +313,4 @@ li {
 #sidebar.active {
   left: 0;
 }
+
