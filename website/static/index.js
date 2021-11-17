@@ -13,8 +13,8 @@ function dogDescription(name) {
       console.log(json);
 
       var x = document.getElementById(name);
-      x.innerHTML = json.snippet;
-
+      x.innerHTML = json.snippet + "<br></br><p>Link to Wiki page <a target='_blank' href="+json.url+">here</a></p>";
+    
       // console.log(x.innerHTML)
 
       if (x.style.display === "none") {
