@@ -8,7 +8,6 @@ views = Blueprint('views', __name__)
 
 
 # petfinder api access information
-
 setup = 'https://api.petfinder.com/v2/oauth2/token'
 dog_search = 'https://api.petfinder.com/v2/animals/'
 rescue_search = 'https://api.petfinder.com/v2/organizations/'
@@ -34,7 +33,6 @@ headers={
 @views.route('/')
 def home():
     v = breeds()
-    # print(v)
     return render_template("home.html", data=v)
 
 
@@ -59,7 +57,6 @@ def results_rescues():
             }
             
         r = requests.get(rescue_search, headers=headers, params=params)
-        print(r.url)
         v = r.json()
 
         v['distance'] = params['distance']
@@ -105,23 +102,8 @@ def results_dogs():
 # get breed list
 def breeds():
     r = requests.get(breed_list, headers=headers)
-    print(r.url)
     v = r.json()
     return v
-
-
-
-# TODO delete later
-@views.route('/filter', methods=['GET'])
-def filter():
-    return render_template("filter.html")
-
-
-# TODO delete later
-@views.route('/sidebar', methods=['GET'])
-def sidebar():
-    return render_template("sidebar.html")
-
 
 def pagination_check(type_search, request):
     string = request.form['next']
@@ -156,8 +138,6 @@ def pagination_check(type_search, request):
     return v
 
 def dogSort(request):
-    print("This is the request:", request)
-    print("Request list:", request.form)
     newParams = {}
     jsonParams = eval(request.form['params'])
     for p in jsonParams:
@@ -175,12 +155,10 @@ def dogSort(request):
     elif request.form['sortSelection'] == 'Random':
         newParams['sort'] = 'random'
 
-    print(newParams)
     r = requests.get(dog_search, headers=headers, params=newParams)
-
     v = dicParams(r.json(), newParams)
     v['sorted'] = request.form['sortSelection']
-
+    
     return v
 
 def dicParams(v, params):

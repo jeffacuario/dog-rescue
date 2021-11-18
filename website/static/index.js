@@ -1,8 +1,5 @@
 function dogDescription(name) {
-  var y =
-    document.getElementById(name).previousElementSibling.childNodes[1]
-      .childNodes[1].innerHTML;
-  // console.log(y)
+  var y = document.getElementById(name).previousElementSibling.childNodes[1].childNodes[1].innerHTML;
   var xhr = new XMLHttpRequest();
   var url = "https://dogs-service-cs361.herokuapp.com/";
   xhr.open("POST", url, true);
@@ -15,8 +12,6 @@ function dogDescription(name) {
       var x = document.getElementById(name);
       x.innerHTML = json.snippet + "<br></br><p>Link to Wiki page <a target='_blank' href="+json.url+">here</a></p>";
     
-      // console.log(x.innerHTML)
-
       if (x.style.display === "none") {
         x.style.display = "block";
       } else {
@@ -25,18 +20,25 @@ function dogDescription(name) {
     }
   };
   var data = JSON.stringify({ breed: y });
-  // console.log(data, y)
   xhr.send(data);
 }
 
-function togglemenu() {
+function toggleMenu() {
   document.getElementById("sidebar").classList.toggle("active");
 }
 
 function filterDogs() {
   const checkedPrimary = [];
+  const checkedSecondary = [];
+  const checkedAge = [];
+  const checkedSize = [];
+  const checkedGender = [];
+
   var cardPrimary = document.getElementById('cardPrimary').children;
-  // console.log(cardPrimary);
+  var cardSecondary = document.getElementById('cardSecondary').children;
+  var cardAge = document.getElementById('cardAge').children;
+  var cardSize = document.getElementById('cardSize').children;
+  var cardGender = document.getElementById('cardGender').children;
 
   
   for (var each in cardPrimary) {
@@ -47,26 +49,116 @@ function filterDogs() {
     }
   }
 
-  // console.log(checkedPrimary);
-  var dogSection = document.getElementsByClassName("dog_section")[0].children;
-  for (var eachDog in dogSection) {
-
-    if(dogSection[eachDog].children){
-      var dogBreed = dogSection[eachDog].children[3].children[0].children[1].innerHTML.trim();
-      var block = dogSection[eachDog];
-
-      if (checkedPrimary.includes(dogBreed) == false){
-        // console.log(dogSection[eachDog].children)
-        // console.log(block);
-        block.style.display = "none";
-      }
-      else if (checkedPrimary.includes(dogBreed) == true) {
-        if((block.style.display == "none")==true){
-          block.style.display = "block";
-        }
+  
+  for (var each in cardSecondary) {
+    if(cardSecondary[each].children){
+      if(cardSecondary[each].children[0].checked == true){
+        checkedSecondary.push(cardSecondary[each].children[0].value)
       }
     }
   }
 
 
+  for (var each in cardAge) {
+    if(cardAge[each].children){
+      if(cardAge[each].children[0].checked == true){
+        checkedAge.push(cardAge[each].children[0].value)
+      }
+    }
+  }
+
+  for (var each in cardSize) {
+    if(cardSize[each].children){
+      if(cardSize[each].children[0].checked == true){
+        checkedSize.push(cardSize[each].children[0].value)
+      }
+    }
+  }
+
+
+  for (var each in cardGender) {
+    if(cardGender[each].children){
+      if(cardGender[each].children[0].checked == true){
+        checkedGender.push(cardGender[each].children[0].value)
+      }
+    }
+  }
+
+  var dogSection = document.getElementsByClassName("dog_section")[0].children;
+  // temp fix.. reset before each filter
+  for (var i in dogSection){
+    var sectParams = dogSection[i].children;
+    if(sectParams) {
+      var block = dogSection[i];
+      block.style.display = 'block';
+    }
+  }
+
+  for (var eachDog in dogSection) {
+    var sectParams = dogSection[eachDog].children;
+    if(sectParams) {
+      const allCheckedParams = {};
+
+      var dogPrimBreed = sectParams[3].children[0].children[1].innerHTML.trim();
+      allCheckedParams['primary'] = dogPrimBreed;
+      var dogSecBreed = sectParams[3].children[1].children[1].innerHTML.trim();
+      allCheckedParams['secondary'] = dogSecBreed;
+      var dogAge = sectParams[3].children[2].children[1].innerHTML.trim();
+      allCheckedParams['age'] = dogAge;
+      var dogSize = sectParams[3].children[3].children[1].innerHTML.trim();
+      allCheckedParams['size'] = dogSize;
+      var dogGender = sectParams[3].children[4].children[1].innerHTML.trim();
+      allCheckedParams['gender'] = dogGender;
+
+      var block = dogSection[eachDog];
+
+      for(var i in allCheckedParams) {
+        if (i == 'primary') {
+          if (checkedPrimary.length > 0) {
+            if(checkedPrimary.includes(allCheckedParams[i]) == true && block.style.display != 'none'){
+              block.style.display = 'block';
+            } else {
+              block.style.display = 'none';
+            }
+          }
+        }
+        if (checkedSecondary.length > 0){
+          if (i == 'secondary') {
+            if(checkedSecondary.includes(allCheckedParams[i]) == true && block.style.display != 'none'){
+              block.style.display = 'block';
+            } else {
+              block.style.display = 'none';
+            }
+          }
+        }
+        if (checkedAge.length > 0){
+          if (i == 'age') {
+            if(checkedAge.includes(allCheckedParams[i]) == true && block.style.display != 'none'){
+              block.style.display = 'block';
+            } else {
+              block.style.display = 'none';
+            }
+          }
+        }
+        if (checkedSize.length > 0){
+          if (i == 'size') {
+            if(checkedSize.includes(allCheckedParams[i]) == true && block.style.display != 'none'){
+              block.style.display = 'block';
+            } else {
+              block.style.display = 'none';
+            }
+          }
+        }
+        if (checkedGender.length > 0){
+          if (i == 'gender') {
+            if(checkedGender.includes(allCheckedParams[i]) == true && block.style.display != 'none'){
+              block.style.display = 'block';
+            } else {
+              block.style.display = 'none';
+            }
+          }
+        }
+      }
+    }
+  }
 }
