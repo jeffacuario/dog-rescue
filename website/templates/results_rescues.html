@@ -1,76 +1,147 @@
-{% extends "base.html" %} {% block title %}Search Dogs{% endblock %}
-
+{% extends "base.html" %} {% block title %}Rescue Results{% endblock %}
 
 {% block content %}
 <br>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="collapse navbar-collapse" id="navbarText">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <a class="nav-link btn btn-warning" href="#">Filter</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link">Sort by:</a>
-        </li>
-        <li>
-            <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Dropdown button
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="#">Nearest</a>
-                <a class="dropdown-item" href="#">Furthest</a>
-                <a class="dropdown-item" href="#">Alphabetical</a>
+    <li class="nav-item active">
+        <a class="nav-link btn btn-warning" href="#" onclick="toggleMenu()">Filter by page</a>
+        
+        <div id="sidebar">
+            <div class="container-fluid" id="container-filter">
+                <div class="row" id="fs_app">
+                    <section class="col-12" id="fs_header_bar">
+                        <div class="row">
+                            <div class="col-2">
+                                <button class="btn" type="button"><i class='bx bxs-chevron-left' onclick="toggleMenu()"></i></button>
+                            </div>
+                            <div class="col-10" id="fs_page_title">
+                                Filters
+                            </div>
+                        </div>
+                    </section>
+                    
+                    <section class="col-12" id="filterSection">
+                        <div class="accordion" id="filterAccordion">
+                            <div class="card">
+                              <div class="card-header" id="headingOne">
+                                <h5 class="mb-0">
+                                  <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    Show by Zip Code
+                                  </button>
+                                </h5>
+                              </div>
+                          
+                              <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#filterAccordion">
+                                <div class="card-body" id="cardZip">
+                                    {% for n in data["zipCodes"] %}
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="{{n}}" id="filterzipCodes">
+                                        <label class="form-check-label" for="filterzipCodes">
+                                          {{n}}
+                                        </label>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                              </div>
+                            </div>
+
+                        </div>
+                        <button onclick="filterRescues()">Filter</button>
+                    </section>
                 </div>
             </div>
-        </li>
+        </div>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link">Sort by:</a>
+    </li>
+    <li>
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <form action="/rescues" method="post">
+                    <input class="form-check-input" type="text" name="params" id="params" value="{{data['params']}}" style="display: none">
 
-        
-        <li class="nav-item">
-            <!-- Button trigger modal Search Rescues-->
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#searchRescueModal">
-                New Search
-            </button>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="sortSelection" id="nearest" value="Nearest">
+                        <label class="form-check-label" for="nearest">
+                            Nearest
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="sortSelection" id="furthest" value="Furthest">
+                        <label class="form-check-label" for="furthest">
+                            Furthest
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="sortSelection" id="name" value="A-Z">
+                        <label class="form-check-label" for="name">
+                            A-Z
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="sortSelection" id="name" value="Z-A">
+                        <label class="form-check-label" for="name">
+                            Z-A
+                        </label>
+                      </div>
+                        <button type="submit" class="btn btn-primary" style="margin-left: 25px;">Sort</button>
+                </form>
+            </div>
+        </div>
+    </li>
 
-            <!-- Modal -->
-            <div class="modal fade" id="searchRescueModal" tabindex="-1" role="dialog" aria-labelledby="searchRescueModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="searchRescueModalLabel">Search for rescues</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <form action="/rescues" method="post">
-                                <div class="mb-3">
-                                    <label for="location" class="form-label">Location*</label>
-                                    <input type="number" class="form-control" id="location" aria-describedby="locationHelp" name="location" placeholder="Enter Zip Code" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="distance" class="form-label">Distance</label>
-                                    <input type="number" class="form-control" id="distance" aria-describedby="distanceHelp" name="distance" placeholder="Enter Miles">
-                                </div>
-                                <div id="note" class="form-text">Note: Increasing distance will show more results
-                                    
-                                </div>
-                                <br>
-                                <button type="submit" class="btn btn-primary">Submit</button>
-                            </form>
-        
-                        </div>
+    
+    <li class="nav-item" style="margin-left: 15px;">
+        <!-- Button trigger modal Search Rescues-->
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#searchRescueModal">
+            New Search
+        </button>
+
+        <!-- Modal -->
+        <div class="modal fade" id="searchRescueModal" tabindex="-1" role="dialog" aria-labelledby="searchRescueModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="searchRescueModalLabel">Search for rescues</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="/rescues" method="post">
+                            <div class="mb-3">
+                                <label for="location" class="form-label">Location*</label>
+                                <input type="number" class="form-control" id="location" aria-describedby="locationHelp" name="location" placeholder="Enter Zip Code" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="distance" class="form-label">Distance</label>
+                                <input type="number" class="form-control" id="distance" aria-describedby="distanceHelp" name="distance" placeholder="Enter Miles">
+                            </div>
+                            <div id="note" class="form-text">Note: Increasing distance will show more results
+                                
+                            </div>
+                            <br>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+    
                     </div>
                 </div>
             </div>
+        </div>
+
         
 
-            <li class="nav-item">
-                <!-- Button trigger modal Search Dogs-->
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#searchDogsModal">
-                    Search Dogs
-                </button>
-    
+    </li>
+
+
+    <li class="nav-item" style="margin-left: 15px;">
+        <!-- Button trigger modal Search Dogs-->
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#searchDogsModal">
+            Search Dogs
+        </button>
+
         <!-- Modal -->
         <div class="modal fade" id="searchDogsModal" tabindex="-1" role="dialog" aria-labelledby="searchDogsModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -83,7 +154,6 @@
                     </div>
                     <div class="modal-body">
                         <form action="/dogs" method="post">
-                            <!-- TODO need a check for location (validation) -->
                             <div class="mb-3">
                                 <label for="location" class="form-label">Location*</label>
                                 <input type="number" class="form-control" id="location" aria-describedby="locationHelp" name="location" placeholder="Enter Zip Code" required>
@@ -92,11 +162,7 @@
                                 <label for="distance" class="form-label">Distance</label>
                                 <input type="number" class="form-control" id="distance" aria-describedby="distanceHelp" name="distance" placeholder="Enter Miles">
                             </div>
-                            <!-- <div class="mb-3">
-                                <label for="breed" class="form-label">Breed</label>
-                                <input type="text" class="form-control" id="breed" aria-describedby="breedHelp" name="breed" placeholder="Enter Breed">
-                            </div> -->
-                            
+
                             <div class="mb-3">
                                 <label for="breed" class="form-label">Breed</label>
                                 <br>
@@ -159,10 +225,9 @@
                 </div>
             </div>
         </div>
-  </nav>
 
-
-
+    </li>
+</nav>
 <h3>{{data['pagination'].total_count}} Available Rescues {{data['distance']}} miles from {{data['location']}}:</h3>
 
     <div class="rescue_section">
@@ -196,6 +261,10 @@
                 <br>
                 <strong>Zip code:</strong> 
                 <li>{{data["organizations"][n]['address'].postcode}}</li>
+
+                <br>
+                <strong>Distance:</strong> 
+                <li>{{data["organizations"][n].distance}} miles</li>
 
                 <br>
                 <strong>Email:</strong> 

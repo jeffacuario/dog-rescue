@@ -13,7 +13,7 @@ dog_search = 'https://api.petfinder.com/v2/animals/'
 rescue_search = 'https://api.petfinder.com/v2/organizations/'
 breed_list = 'https://api.petfinder.com/v2/types/dog/breeds'
 
-
+# load credentials from file
 with open('credentials.json') as config_file:
     config = json.load(config_file)
 
@@ -24,9 +24,10 @@ data = {
 }
 
 r = requests.post(setup, data)
+
 response = r.json()
 
-headers={
+headers = {
     'Authorization': 'Bearer ' + response['access_token']
 }
 
@@ -39,10 +40,15 @@ def home():
 @views.route('/rescues', methods=['POST'])
 def results_rescues():
     if request.method == 'POST':
-        try:
-            return pagination_check(rescue_search, "results_rescues.html.html")
-        except:
-            pass
+        # handle sort
+        if 'sortSelection' in request.form:
+            v = rescueSort(request)
+            return render_template("results_rescues.html", data=v)
+
+        # handle pagination
+        if 'next' in request.form:
+            v = pagination_check(rescue_search, request, 'rescue')
+            return render_template("results_rescues.html", data=v)
 
 
         if request.form['distance'] == '':
@@ -57,11 +63,7 @@ def results_rescues():
             }
             
         r = requests.get(rescue_search, headers=headers, params=params)
-        v = r.json()
-
-        v['distance'] = params['distance']
-        v['location'] = params['location']
-        v['breeds'] = breeds()['breeds']
+        v = rescueParams(r.json(), params)
 
         return render_template("results_rescues.html", data=v)
     else:
@@ -78,7 +80,7 @@ def results_dogs():
 
         # handle pagination
         if 'next' in request.form:
-            v = pagination_check(dog_search, request)
+            v = pagination_check(dog_search, request, 'dog')
             return render_template("results_dogs.html", data=v)
 
 
@@ -92,7 +94,7 @@ def results_dogs():
             params["distance"] = 0
             
         r = requests.get(dog_search, headers=headers, params=params)
-        v = dicParams(r.json(), params)
+        v = dogParams(r.json(), params)
 
         return render_template("results_dogs.html", data=v)
     else:
@@ -105,7 +107,7 @@ def breeds():
     v = r.json()
     return v
 
-def pagination_check(type_search, request):
+def pagination_check(type_search, request, flag):
     string = request.form['next']
 
     params = {}
@@ -133,7 +135,11 @@ def pagination_check(type_search, request):
         params[word] = string[y+1:]
 
     r = requests.get(type_search, headers=headers, params=params)
-    v = dicParams(r.json(), params)
+
+    if flag == 'dog':
+        v = dogParams(r.json(), params)
+    else:
+        v = rescueParams(r.json(), params)
 
     return v
 
@@ -156,12 +162,33 @@ def dogSort(request):
         newParams['sort'] = 'random'
 
     r = requests.get(dog_search, headers=headers, params=newParams)
-    v = dicParams(r.json(), newParams)
+    v = dogParams(r.json(), newParams)
     v['sorted'] = request.form['sortSelection']
     
     return v
 
-def dicParams(v, params):
+def rescueSort(request):
+    newParams = {}
+    jsonParams = eval(request.form['params'])
+    for p in jsonParams:
+        newParams[p] = jsonParams[p]
+
+    if request.form['sortSelection'] == 'Nearest':
+        newParams['sort'] = 'distance'
+    elif request.form['sortSelection'] == 'Furthest':
+        newParams['sort'] = '-distance'
+    elif request.form['sortSelection'] == 'A-Z':
+        newParams['sort'] = 'name'
+    elif request.form['sortSelection'] == 'Z-A':
+        newParams['sort'] = '-name'
+
+    r = requests.get(rescue_search, headers=headers, params=newParams)
+    v = rescueParams(r.json(), newParams)
+    v['sorted'] = request.form['sortSelection']
+    
+    return v
+
+def dogParams(v, params):
     primaryBreeds = []
     secondaryBreeds = []
     ages = []
@@ -197,3 +224,21 @@ def dicParams(v, params):
             genders.append(gender)
 
     return v
+
+
+def rescueParams(v, params):
+    zipCodes = []
+
+    v['location'] = params['location']
+    v['distance'] = params['distance']
+    v['breeds'] = breeds()['breeds']
+    v['params'] = params
+    v['zipCodes'] = zipCodes
+    
+    for attrib in v['organizations']:
+        zip = attrib['address']['postcode']
+
+        if zip not in zipCodes:
+            zipCodes.append(zip)
+    return v
+

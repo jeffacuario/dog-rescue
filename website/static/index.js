@@ -7,7 +7,6 @@ function dogDescription(name) {
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4 && xhr.status === 200) {
       var json = JSON.parse(xhr.responseText);
-      console.log(json);
 
       var x = document.getElementById(name);
       x.innerHTML = json.snippet + "<br></br><p>Link to Wiki page <a target='_blank' href="+json.url+">here</a></p>";
@@ -85,7 +84,7 @@ function filterDogs() {
   }
 
   var dogSection = document.getElementsByClassName("dog_section")[0].children;
-  // temp fix.. reset before each filter
+  // Reset before each filter
   for (var i in dogSection){
     var sectParams = dogSection[i].children;
     if(sectParams) {
@@ -152,6 +151,56 @@ function filterDogs() {
         if (checkedGender.length > 0){
           if (i == 'gender') {
             if(checkedGender.includes(allCheckedParams[i]) == true && block.style.display != 'none'){
+              block.style.display = 'block';
+            } else {
+              block.style.display = 'none';
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+function filterRescues() {
+  const checkedZip = [];
+
+  var cardZip = document.getElementById('cardZip').children;
+  
+  for (var each in cardZip) {
+    if(cardZip[each].children){
+      if(cardZip[each].children[0].checked == true){
+        checkedZip.push(cardZip[each].children[0].value)
+      }
+    }
+  }
+
+  var rescueSection = document.getElementsByClassName("rescue_section")[0].children;
+  
+
+  // Reset before each filter
+  for (var i in rescueSection){
+    var sectParams = rescueSection[i].children;
+    if(sectParams) {
+      var block = rescueSection[i];
+      block.style.display = 'block';
+    }
+  }
+
+  for (var eachRescue in rescueSection) {
+    var sectParams = rescueSection[eachRescue].children;
+    if(sectParams) {
+      const allCheckedParams = {};
+
+      var rescueZip = sectParams[2].children[14].innerHTML.trim();
+      allCheckedParams['zip'] = rescueZip;
+
+      var block = rescueSection[eachRescue];
+
+      for(var i in allCheckedParams) {
+        if (i == 'zip') {
+          if (checkedZip.length > 0) {
+            if(checkedZip.includes(allCheckedParams[i]) == true && block.style.display != 'none'){
               block.style.display = 'block';
             } else {
               block.style.display = 'none';
