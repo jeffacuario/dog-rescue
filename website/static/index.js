@@ -7,7 +7,6 @@ function dogDescription(name) {
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4 && xhr.status === 200) {
       var json = JSON.parse(xhr.responseText);
-
       var x = document.getElementById(name);
       x.innerHTML = json.snippet + "<br></br><p>Link to Wiki page <a target='_blank' href="+json.url+">here</a></p>";
     
@@ -27,63 +26,20 @@ function toggleMenu() {
 }
 
 function filterDogs() {
-  const checkedPrimary = [];
-  const checkedSecondary = [];
-  const checkedAge = [];
-  const checkedSize = [];
-  const checkedGender = [];
-
   var cardPrimary = document.getElementById('cardPrimary').children;
   var cardSecondary = document.getElementById('cardSecondary').children;
   var cardAge = document.getElementById('cardAge').children;
   var cardSize = document.getElementById('cardSize').children;
   var cardGender = document.getElementById('cardGender').children;
 
-  
-  for (var each in cardPrimary) {
-    if(cardPrimary[each].children){
-      if(cardPrimary[each].children[0].checked == true){
-        checkedPrimary.push(cardPrimary[each].children[0].value)
-      }
-    }
-  }
+  const checkedPrimary = addToCheckedList(cardPrimary)
+  const checkedSecondary = addToCheckedList(cardSecondary)
+  const checkedAge = addToCheckedList(cardAge)
+  const checkedSize = addToCheckedList(cardSize)
+  const checkedGender = addToCheckedList(cardGender)
 
-  
-  for (var each in cardSecondary) {
-    if(cardSecondary[each].children){
-      if(cardSecondary[each].children[0].checked == true){
-        checkedSecondary.push(cardSecondary[each].children[0].value)
-      }
-    }
-  }
+  var dogSection = document.getElementsByClassName("dogSection")[0].children;
 
-
-  for (var each in cardAge) {
-    if(cardAge[each].children){
-      if(cardAge[each].children[0].checked == true){
-        checkedAge.push(cardAge[each].children[0].value)
-      }
-    }
-  }
-
-  for (var each in cardSize) {
-    if(cardSize[each].children){
-      if(cardSize[each].children[0].checked == true){
-        checkedSize.push(cardSize[each].children[0].value)
-      }
-    }
-  }
-
-
-  for (var each in cardGender) {
-    if(cardGender[each].children){
-      if(cardGender[each].children[0].checked == true){
-        checkedGender.push(cardGender[each].children[0].value)
-      }
-    }
-  }
-
-  var dogSection = document.getElementsByClassName("dog_section")[0].children;
   // Reset before each filter
   for (var i in dogSection){
     var sectParams = dogSection[i].children;
@@ -162,6 +118,20 @@ function filterDogs() {
   }
 }
 
+
+function addToCheckedList(param) {
+  const checkedArray = []
+  for (var each in param) {
+    if(param[each].children){
+      if(param[each].children[0].checked == true){
+        checkedArray.push(param[each].children[0].value)
+      }
+    }
+  }
+  return checkedArray
+}
+
+
 function filterRescues() {
   const checkedZip = [];
 
@@ -175,7 +145,7 @@ function filterRescues() {
     }
   }
 
-  var rescueSection = document.getElementsByClassName("rescue_section")[0].children;
+  var rescueSection = document.getElementsByClassName("rescueSection")[0].children;
   
 
   // Reset before each filter

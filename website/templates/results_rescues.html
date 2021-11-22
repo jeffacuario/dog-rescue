@@ -8,13 +8,13 @@
         
         <div id="sidebar">
             <div class="container-fluid" id="container-filter">
-                <div class="row" id="fs_app">
-                    <section class="col-12" id="fs_header_bar">
+                <div class="row" id="filterSection">
+                    <section class="col-12" id="filterHeaderBar">
                         <div class="row">
                             <div class="col-2">
                                 <button class="btn" type="button"><i class='bx bxs-chevron-left' onclick="toggleMenu()"></i></button>
                             </div>
-                            <div class="col-10" id="fs_page_title">
+                            <div class="col-10" id="filterTitle">
                                 Filters
                             </div>
                         </div>
@@ -166,8 +166,8 @@
                             <div class="mb-3">
                                 <label for="breed" class="form-label">Breed</label>
                                 <br>
-                                <input list="breed_list" name="breed" id="breed" class="form-control" placeholder="Select Breed">
-                                <datalist id="breed_list">
+                                <input list="breedList" name="breed" id="breed" class="form-control" placeholder="Select Breed">
+                                <datalist id="breedList">
                                     {% for n in data["breeds"] %}
                                         <option value="{{n.name}}"></option>
                                     {% endfor %}
@@ -178,8 +178,8 @@
                                 <label for="age" class="form-label">Age</label>
                                 <!-- <input type="text" class="form-control" id="age" aria-describedby="ageHelp" name="age" placeholder="Enter Age"> -->
                                 <br>
-                                <input list="age_list" name="age" id="age" class="form-control" placeholder="Select Age">
-                                <datalist id="age_list">
+                                <input list="ageList" name="age" id="age" class="form-control" placeholder="Select Age">
+                                <datalist id="ageList">
                                     <option value="baby"></option>
                                     <option value="young"></option>
                                     <option value="adult"></option>
@@ -192,8 +192,8 @@
                                 <label for="gender" class="form-label">Gender</label>
                                 <!-- <input type="text" class="form-control" id="gender" aria-describedby="genderHelp" name="gender" placeholder="Enter Gender"> -->
                                 <br>
-                                <input list="gender_list" name="gender" id="gender" class="form-control" placeholder="Select Gender">
-                                <datalist id="gender_list">
+                                <input list="genderList" name="gender" id="gender" class="form-control" placeholder="Select Gender">
+                                <datalist id="genderList">
                                     <option value="male"></option>
                                     <option value="female"></option>
                                     <option value="unknown"></option>
@@ -204,13 +204,13 @@
                                 <label for="limit" class="form-label">Results per page</label>
                                 <br />
                                 <input
-                                  list="num_results_list"
+                                  list="numResultsList"
                                   name="limit"
                                   id="limit"
                                   class="form-control"
                                   placeholder="Select Number of Results to Display"
                                 />
-                                <datalist id="num_results_list">
+                                <datalist id="numResultsList">
                                   <option value="20"></option>
                                   <option value="50"></option>
                                   <option value="100"></option>
@@ -230,10 +230,10 @@
 </nav>
 <h3>{{data['pagination'].total_count}} Available Rescues {{data['distance']}} miles from {{data['location']}}:</h3>
 
-    <div class="rescue_section">
+    <div class="rescueSection">
         {% for n in range(data["organizations"]| length) %}
 
-        <div class="each_rescue">
+        <div class="eachRescue">
             <h2>{{data["organizations"][n].name}}</h2>
             <div>
                 {% if data["organizations"][n].photos[0]%}

@@ -1,16 +1,16 @@
 {% extends "base.html" %} {% block title %}Dog Rescue{% endblock %} {% block
 content %}
 
-<section class="home_page">
+<section class="homePage">
   <!-- <h1>{{data}}</h1> -->
   <h3>Dog rescue webapp!</h3>
   <img
     src="{{ url_for('static', filename='kermit.JPG') }}"
     alt=""
-    class="home_img"
+    class="homeImg"
   />
 
-  <p class="home_description">
+  <p class="homeDescription">
     Hello and welcome! Looking for a dog or a local rescue? Click on the one of
     the buttons below for which one you are looking for and we will show you
     what is available!
@@ -147,22 +147,18 @@ content %}
                 placeholder="Enter Miles"
               />
             </div>
-            <!-- <div class="mb-3">
-                            <label for="breed" class="form-label">Breed</label>
-                            <input type="text" class="form-control" id="breed" aria-describedby="breedHelp" name="breed" placeholder="Enter Breed">
-                        </div> -->
 
             <div class="mb-3">
               <label for="breed" class="form-label">Breed</label>
               <br />
               <input
-                list="breed_list"
+                list="breedList"
                 name="breed"
                 id="breed"
                 class="form-control"
                 placeholder="Select Breed"
               />
-              <datalist id="breed_list">
+              <datalist id="breedList">
                 {% for n in data["breeds"] %}
                 <option value="{{n.name}}"></option>
                 {% endfor %}
@@ -171,16 +167,15 @@ content %}
 
             <div class="mb-3">
               <label for="age" class="form-label">Age</label>
-              <!-- <input type="text" class="form-control" id="age" aria-describedby="ageHelp" name="age" placeholder="Enter Age"> -->
               <br />
               <input
-                list="age_list"
+                list="ageList"
                 name="age"
                 id="age"
                 class="form-control"
                 placeholder="Select Age"
               />
-              <datalist id="age_list">
+              <datalist id="ageList">
                 <option value="baby"></option>
                 <option value="young"></option>
                 <option value="adult"></option>
@@ -188,19 +183,17 @@ content %}
               </datalist>
             </div>
 
-            <!-- male, female, unknown Accepts multiple values, e.g. gender=male,female -->
             <div class="mb-3">
               <label for="gender" class="form-label">Gender</label>
-              <!-- <input type="text" class="form-control" id="gender" aria-describedby="genderHelp" name="gender" placeholder="Enter Gender"> -->
               <br />
               <input
-                list="gender_list"
+                list="genderList"
                 name="gender"
                 id="gender"
                 class="form-control"
                 placeholder="Select Gender"
               />
-              <datalist id="gender_list">
+              <datalist id="genderList">
                 <option value="male"></option>
                 <option value="female"></option>
                 <option value="unknown"></option>
@@ -211,13 +204,13 @@ content %}
               <label for="limit" class="form-label">Results per page</label>
               <br />
               <input
-                list="num_results_list"
+                list="numResultsList"
                 name="limit"
                 id="limit"
                 class="form-control"
                 placeholder="Select Number of Results to Display"
               />
-              <datalist id="num_results_list">
+              <datalist id="numResultsList">
                 <option value="20"></option>
                 <option value="50"></option>
                 <option value="100"></option>

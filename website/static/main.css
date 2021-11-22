@@ -9,11 +9,11 @@ form {
   text-align: left;
 }
 
-.home_img {
+.homeImg {
   height: 500px;
 }
 
-.home_description {
+.homeDescription {
   max-width: 600px;
   margin: auto;
   padding: 10px;
@@ -24,7 +24,7 @@ form {
 }
 
 /* Rescue page */
-.rescue_section {
+.rescueSection {
   margin-left: auto;
   margin-right: auto;
   display: flex;
@@ -33,7 +33,7 @@ form {
   flex-wrap: wrap;
 }
 
-.each_rescue {
+.eachRescue {
   padding: 10px;
   min-width: 400px;
   max-width: 400px;
@@ -46,7 +46,7 @@ li {
 }
 
 /* dog page */
-.dog_section {
+.dogSection {
   max-width: 2000px;
   margin-left: auto;
   margin-right: auto;
@@ -56,23 +56,12 @@ li {
   flex-wrap: wrap;
 }
 
-.each_dog {
+.eachDog {
   padding: 10px;
   min-width: 500px;
   max-width: 500px;
   box-sizing: border-box;
   border: 1px solid black;
-}
-
-/* ********************************** */
-/* Hide the text */
-
-#myDIV {
-  width: 100%;
-  padding: 50px 0;
-  text-align: center;
-  background-color: lightblue;
-  margin-top: 20px;
 }
 
 /* ********************************** */
@@ -96,18 +85,18 @@ li {
 }
 
 
-#fs_app > section:not(#fs_header_bar) {
+#filterSection > section:not(#filterHeaderBar) {
   padding-top: 25px;
   padding-bottom: 10px;
   border-bottom: 2px solid #eee;
 }
 
-#fs_header_bar {
+#filterHeaderBar {
   padding-top: 25px;
   padding-bottom: 0;
 }
 
-#fs_page_title {
+#filterTitle {
   font-size: 15px;
   font-weight: 500;
   text-transform: uppercase;
@@ -128,7 +117,6 @@ li {
   height: fit-content;
   left: -30%;
   background-color: rgb(245, 244, 240);
-  /* background-color: #ffffff; */
 }
 
 #sidebar li {

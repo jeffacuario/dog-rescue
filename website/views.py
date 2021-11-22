@@ -9,13 +9,13 @@ views = Blueprint('views', __name__)
 
 # petfinder api access information
 setup = 'https://api.petfinder.com/v2/oauth2/token'
-dog_search = 'https://api.petfinder.com/v2/animals/'
-rescue_search = 'https://api.petfinder.com/v2/organizations/'
-breed_list = 'https://api.petfinder.com/v2/types/dog/breeds'
+dogSearch = 'https://api.petfinder.com/v2/animals/'
+rescueSearch = 'https://api.petfinder.com/v2/organizations/'
+breedList = 'https://api.petfinder.com/v2/types/dog/breeds'
 
 # load credentials from file
-with open('credentials.json') as config_file:
-    config = json.load(config_file)
+with open('credentials.json') as configFile:
+    config = json.load(configFile)
 
 data = {
     'grant_type': config['grant_type'],
@@ -47,7 +47,7 @@ def results_rescues():
 
         # handle pagination
         if 'next' in request.form:
-            v = pagination_check(rescue_search, request, 'rescue')
+            v = pagination_check(rescueSearch, request, 'rescue')
             return render_template("results_rescues.html", data=v)
 
 
@@ -62,7 +62,7 @@ def results_rescues():
                 "distance" :int(request.form['distance'])
             }
             
-        r = requests.get(rescue_search, headers=headers, params=params)
+        r = requests.get(rescueSearch, headers=headers, params=params)
         v = rescueParams(r.json(), params)
 
         return render_template("results_rescues.html", data=v)
@@ -80,7 +80,7 @@ def results_dogs():
 
         # handle pagination
         if 'next' in request.form:
-            v = pagination_check(dog_search, request, 'dog')
+            v = pagination_check(dogSearch, request, 'dog')
             return render_template("results_dogs.html", data=v)
 
 
@@ -93,7 +93,7 @@ def results_dogs():
         if request.form['distance'] == '':
             params["distance"] = 0
             
-        r = requests.get(dog_search, headers=headers, params=params)
+        r = requests.get(dogSearch, headers=headers, params=params)
         v = dogParams(r.json(), params)
 
         return render_template("results_dogs.html", data=v)
@@ -103,7 +103,7 @@ def results_dogs():
 
 # get breed list
 def breeds():
-    r = requests.get(breed_list, headers=headers)
+    r = requests.get(breedList, headers=headers)
     v = r.json()
     return v
 
@@ -161,7 +161,7 @@ def dogSort(request):
     elif request.form['sortSelection'] == 'Random':
         newParams['sort'] = 'random'
 
-    r = requests.get(dog_search, headers=headers, params=newParams)
+    r = requests.get(dogSearch, headers=headers, params=newParams)
     v = dogParams(r.json(), newParams)
     v['sorted'] = request.form['sortSelection']
     
@@ -182,7 +182,7 @@ def rescueSort(request):
     elif request.form['sortSelection'] == 'Z-A':
         newParams['sort'] = '-name'
 
-    r = requests.get(rescue_search, headers=headers, params=newParams)
+    r = requests.get(rescueSearch, headers=headers, params=newParams)
     v = rescueParams(r.json(), newParams)
     v['sorted'] = request.form['sortSelection']
     
