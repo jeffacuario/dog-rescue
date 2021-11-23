@@ -32,7 +32,6 @@ function toggleMenu() {
   document.getElementById("sidebar").classList.toggle("active");
 }
 
-
 // Filter Dog Results based on selected parameters
 function filterDogs() {
   var cardPrimary = document.getElementById("cardPrimary").children;
@@ -51,7 +50,6 @@ function filterDogs() {
 
   // Reset before each filter
   filterResetAll(dogSection)
-
 
   for (var eachDog in dogSection) {
     var sectParams = dogSection[eachDog].children;
@@ -84,13 +82,10 @@ function filterDogs() {
 }
 
 
-
 // Filter Rescue Results based on selected parameters
 function filterRescues() {
   var cardZip = document.getElementById("cardZip").children;
-
   const checkedZip = addToCheckedList(cardZip);
-
   var rescueSection = document.getElementsByClassName("rescueSection")[0].children;
 
   // Reset before each filter
@@ -100,11 +95,8 @@ function filterRescues() {
     var sectParams = rescueSection[eachRescue].children;
     if (sectParams) {
       const allCheckedParams = {};
-
       var rescueZip = sectParams[2].children[14].innerHTML.trim();
-
       allCheckedParams["zip"] = rescueZip;
-
       var block = rescueSection[eachRescue];
 
       for (var i in allCheckedParams) {
@@ -113,7 +105,6 @@ function filterRescues() {
     }
   }
 }
-
 
 function hideOrDisplay(current, param, checkedParam, allCheckedParams, block){
   if (current == param) {

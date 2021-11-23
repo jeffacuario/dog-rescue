@@ -1,11 +1,9 @@
 from flask import request
 from flask import Blueprint, render_template
-
 import requests
 import json
 
 views = Blueprint('views', __name__)
-
 
 # petfinder api access information
 setup = 'https://api.petfinder.com/v2/oauth2/token'
@@ -13,43 +11,57 @@ dogSearch = 'https://api.petfinder.com/v2/animals/'
 rescueSearch = 'https://api.petfinder.com/v2/organizations/'
 breedList = 'https://api.petfinder.com/v2/types/dog/breeds'
 
-# load credentials from file
-with open('credentials.json') as configFile:
-    config = json.load(configFile)
 
-data = {
-    'grant_type': config['grant_type'],
-    'client_id': config['pf_client_id'],
-    'client_secret': config['client_secret']
-}
+def setupAPI():
+    """
+    Initial Setup of PetFinder API 
+    Returns headers needed to make calls for other functions
+    """
+    # load credentials from file
+    with open('credentials.json') as configFile:
+        config = json.load(configFile)
 
-r = requests.post(setup, data)
+    data = {
+        'grant_type': config['grant_type'],
+        'client_id': config['pf_client_id'],
+        'client_secret': config['client_secret']
+    }
+    req = requests.post(setup, data)
+    response = req.json()
 
-response = r.json()
+    headers = {
+        'Authorization': 'Bearer ' + response['access_token']
+    }
+    return headers
 
-headers = {
-    'Authorization': 'Bearer ' + response['access_token']
-}
+
+headers = setupAPI()
 
 
 @views.route('/')
 def home():
-    v = breeds()
-    return render_template("home.html", data=v)
+    """
+    Render Home Page
+    """
+    values = breeds()
+    return render_template("home.html", data=values)
 
 
 @views.route('/rescues', methods=['POST'])
 def results_rescues():
+    """
+    Render List of Rescues based on user input
+    """
     if request.method == 'POST':
         # handle sort
         if 'sortSelection' in request.form:
-            v = rescueSort(request)
-            return render_template("results_rescues.html", data=v)
+            values = rescueSort(request)
+            return render_template("results_rescues.html", data=values)
 
         # handle pagination
         if 'next' in request.form:
-            v = pagination_check(rescueSearch, request, 'rescue')
-            return render_template("results_rescues.html", data=v)
+            values = pagination_check(rescueSearch, request, 'rescue')
+            return render_template("results_rescues.html", data=values)
 
         if request.form['distance'] == '':
             params = {
@@ -62,88 +74,100 @@ def results_rescues():
                 "distance": int(request.form['distance'])
             }
 
-        r = requests.get(rescueSearch, headers=headers, params=params)
-        v = rescueParams(r.json(), params)
+        req = requests.get(rescueSearch, headers=headers, params=params)
+        values = rescueParams(req.json(), params)
 
-        return render_template("results_rescues.html", data=v)
+        return render_template("results_rescues.html", data=values)
     else:
         return render_template("home.html")
 
 
 @views.route('/dogs', methods=['POST'])
 def results_dogs():
+    """
+    Render List of Dogs based on user input
+    """
     if request.method == 'POST':
         # handle sort
         if 'sortSelection' in request.form:
-            v = dogSort(request)
-            return render_template("results_dogs.html", data=v)
+            values = dogSort(request)
+            return render_template("results_dogs.html", data=values)
 
         # handle pagination
         if 'next' in request.form:
-            v = pagination_check(dogSearch, request, 'dog')
-            return render_template("results_dogs.html", data=v)
+            values = pagination_check(dogSearch, request, 'dog')
+            return render_template("results_dogs.html", data=values)
 
         params = {'type': 'Dog'}
+
+        if request.form['distance'] == '':
+            params["distance"] = 0
 
         for each in request.form:
             if request.form[each] != '':
                 params[each] = request.form[each]
 
-        if request.form['distance'] == '':
-            params["distance"] = 0
+        req = requests.get(dogSearch, headers=headers, params=params)
+        values = dogParams(req.json(), params)
 
-        r = requests.get(dogSearch, headers=headers, params=params)
-        v = dogParams(r.json(), params)
-
-        return render_template("results_dogs.html", data=v)
+        return render_template("results_dogs.html", data=values)
     else:
         return render_template("home.html")
 
 
-# get breed list
 def breeds():
-    r = requests.get(breedList, headers=headers)
-    v = r.json()
-    return v
+    """
+    Makes API call returning list of all available dog breeds
+    """
+    req = requests.get(breedList, headers=headers)
+    values = req.json()
+    return values
 
 
 def pagination_check(type_search, request, flag):
+    """
+    Handle pagination links 
+    Returns the parameters used in the search
+    """
     string = request.form['next']
 
     params = {}
 
-    v = string.find("?")
+    values = string.find("?")
     y = string.find('=')
 
-    first = string[v+1:y]
-    v = string.find("&")
-    first_value = string[y+1:v]
+    first = string[values+1:y]
+    values = string.find("&")
+    first_value = string[y+1:values]
     params[first] = first_value
 
-    string = string[v+1:]
-    while v != -1 and y != -1:
+    string = string[values+1:]
+    while values != -1 and y != -1:
         y = string.find("=")
-        v = string.find("&")
+        values = string.find("&")
         word = string[:y]
-        value = string[y+1:v]
+        value = string[y+1:values]
         params[word] = value
 
-        string = string[v+1:]
+        string = string[values+1:]
 
     if value != string[y+1:]:
         params[word] = string[y+1:]
 
-    r = requests.get(type_search, headers=headers, params=params)
+    req = requests.get(type_search, headers=headers, params=params)
 
     if flag == 'dog':
-        v = dogParams(r.json(), params)
+        values = dogParams(req.json(), params)
     else:
-        v = rescueParams(r.json(), params)
+        values = rescueParams(req.json(), params)
 
-    return v
+    return values
 
 
 def dogSort(request):
+    """
+    Handles the sort API call for dogs
+    """
     newParams = {}
     jsonParams = eval(request.form['params'])
     for p in jsonParams:
@@ -160,14 +184,17 @@ def dogSort(request):
     elif request.form['sortSelection'] == 'Random':
         newParams['sort'] = 'random'
 
-    r = requests.get(dogSearch, headers=headers, params=newParams)
-    v = dogParams(r.json(), newParams)
-    v['sorted'] = request.form['sortSelection']
+    req = requests.get(dogSearch, headers=headers, params=newParams)
+    values = dogParams(req.json(), newParams)
+    values['sorted'] = request.form['sortSelection']
 
-    return v
+    return values
 
 
 def rescueSort(request):
+    """
+    Handles the sort API call for rescues
+    """
     newParams = {}
     jsonParams = eval(request.form['params'])
     for p in jsonParams:
@@ -182,31 +209,34 @@ def rescueSort(request):
     elif request.form['sortSelection'] == 'Z-A':
         newParams['sort'] = '-name'
 
-    r = requests.get(rescueSearch, headers=headers, params=newParams)
-    v = rescueParams(r.json(), newParams)
-    v['sorted'] = request.form['sortSelection']
+    req = requests.get(rescueSearch, headers=headers, params=newParams)
+    values = rescueParams(req.json(), newParams)
+    values['sorted'] = request.form['sortSelection']
 
-    return v
+    return values
 
 
-def dogParams(v, params):
+def dogParams(values, params):
+    """
+    Returns dictionary of the params for dogs
+    """
     primaryBreeds = []
     secondaryBreeds = []
     ages = []
     sizes = []
     genders = []
 
-    v['location'] = params['location']
-    v['distance'] = params['distance']
-    v['primaryBreeds'] = primaryBreeds
-    v['secondaryBreeds'] = secondaryBreeds
-    v['age'] = ages
-    v['size'] = sizes
-    v['gender'] = genders
-    v['params'] = params
-    v['breeds'] = breeds()['breeds']
+    values['location'] = params['location']
+    values['distance'] = params['distance']
+    values['primaryBreeds'] = primaryBreeds
+    values['secondaryBreeds'] = secondaryBreeds
+    values['age'] = ages
+    values['size'] = sizes
+    values['gender'] = genders
+    values['params'] = params
+    values['breeds'] = breeds()['breeds']
 
-    for attrib in v['animals']:
+    for attrib in values['animals']:
         prim = attrib['breeds']['primary']
         sec = attrib['breeds']['secondary']
         age = attrib['age']
@@ -224,21 +254,24 @@ def dogParams(v, params):
         if gender not in genders:
             genders.append(gender)
 
-    return v
+    return values
 
 
-def rescueParams(v, params):
+def rescueParams(values, params):
+    """
+    Returns dictionary of the params for rescues
+    """
     zipCodes = []
 
-    v['location'] = params['location']
-    v['distance'] = params['distance']
-    v['breeds'] = breeds()['breeds']
-    v['params'] = params
-    v['zipCodes'] = zipCodes
+    values['location'] = params['location']
+    values['distance'] = params['distance']
+    values['breeds'] = breeds()['breeds']
+    values['params'] = params
+    values['zipCodes'] = zipCodes
 
-    for attrib in v['organizations']:
+    for attrib in values['organizations']:
         zip = attrib['address']['postcode']
 
         if zip not in zipCodes:
             zipCodes.append(zip)
-    return v
+    return values
