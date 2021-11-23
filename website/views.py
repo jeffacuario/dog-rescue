@@ -31,6 +31,7 @@ headers = {
     'Authorization': 'Bearer ' + response['access_token']
 }
 
+
 @views.route('/')
 def home():
     v = breeds()
@@ -50,18 +51,17 @@ def results_rescues():
             v = pagination_check(rescueSearch, request, 'rescue')
             return render_template("results_rescues.html", data=v)
 
-
         if request.form['distance'] == '':
             params = {
-            "location" : int(request.form['location']),
-            "distance" : 0
+                "location": int(request.form['location']),
+                "distance": 0
             }
         else:
             params = {
-                "location" :int(request.form['location']),
-                "distance" :int(request.form['distance'])
+                "location": int(request.form['location']),
+                "distance": int(request.form['distance'])
             }
-            
+
         r = requests.get(rescueSearch, headers=headers, params=params)
         v = rescueParams(r.json(), params)
 
@@ -83,8 +83,7 @@ def results_dogs():
             v = pagination_check(dogSearch, request, 'dog')
             return render_template("results_dogs.html", data=v)
 
-
-        params = {'type':'Dog'}
+        params = {'type': 'Dog'}
 
         for each in request.form:
             if request.form[each] != '':
@@ -92,7 +91,7 @@ def results_dogs():
 
         if request.form['distance'] == '':
             params["distance"] = 0
-            
+
         r = requests.get(dogSearch, headers=headers, params=params)
         v = dogParams(r.json(), params)
 
@@ -107,6 +106,7 @@ def breeds():
     v = r.json()
     return v
 
+
 def pagination_check(type_search, request, flag):
     string = request.form['next']
 
@@ -120,7 +120,6 @@ def pagination_check(type_search, request, flag):
     first_value = string[y+1:v]
     params[first] = first_value
 
-
     string = string[v+1:]
     while v != -1 and y != -1:
         y = string.find("=")
@@ -128,7 +127,7 @@ def pagination_check(type_search, request, flag):
         word = string[:y]
         value = string[y+1:v]
         params[word] = value
-        
+
         string = string[v+1:]
 
     if value != string[y+1:]:
@@ -143,12 +142,12 @@ def pagination_check(type_search, request, flag):
 
     return v
 
+
 def dogSort(request):
     newParams = {}
     jsonParams = eval(request.form['params'])
     for p in jsonParams:
         newParams[p] = jsonParams[p]
-
 
     if request.form['sortSelection'] == 'Newest':
         newParams['sort'] = 'recent'
@@ -164,8 +163,9 @@ def dogSort(request):
     r = requests.get(dogSearch, headers=headers, params=newParams)
     v = dogParams(r.json(), newParams)
     v['sorted'] = request.form['sortSelection']
-    
+
     return v
+
 
 def rescueSort(request):
     newParams = {}
@@ -185,8 +185,9 @@ def rescueSort(request):
     r = requests.get(rescueSearch, headers=headers, params=newParams)
     v = rescueParams(r.json(), newParams)
     v['sorted'] = request.form['sortSelection']
-    
+
     return v
+
 
 def dogParams(v, params):
     primaryBreeds = []
@@ -211,7 +212,7 @@ def dogParams(v, params):
         age = attrib['age']
         size = attrib['size']
         gender = attrib['gender']
-        
+
         if prim not in primaryBreeds:
             primaryBreeds.append(prim)
         if sec not in secondaryBreeds:
@@ -234,11 +235,10 @@ def rescueParams(v, params):
     v['breeds'] = breeds()['breeds']
     v['params'] = params
     v['zipCodes'] = zipCodes
-    
+
     for attrib in v['organizations']:
         zip = attrib['address']['postcode']
 
         if zip not in zipCodes:
             zipCodes.append(zip)
     return v
-

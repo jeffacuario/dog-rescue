@@ -84,7 +84,6 @@ li {
   text-align: left;
 }
 
-
 #filterSection > section:not(#filterHeaderBar) {
   padding-top: 25px;
   padding-bottom: 10px;
@@ -130,4 +129,3 @@ li {
 #sidebar.active {
   left: 0;
 }
-
