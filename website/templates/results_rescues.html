@@ -228,7 +228,13 @@
 
     </li>
 </nav>
-<h3>{{data['pagination'].total_count}} Available Rescues {{data['distance']}} miles from {{data['location']}}:</h3>
+
+{% if data["sorted"] %}
+    <h3>{{data['pagination'].total_count}} Available Rescues {{data['distance']}} miles from {{data['location']}}
+        <br>Sorted by: {{data['sorted']}}</h3>
+{%else%}
+    <h3>{{data['pagination'].total_count}} Available Rescues {{data['distance']}} miles from {{data['location']}}  <br>Sorted by: Newest</h3></h3>
+{% endif %}
 
     <div class="rescueSection">
         {% for n in range(data["organizations"]| length) %}

@@ -2,6 +2,7 @@
 
 A dog rescue application that allows users search for dogs based on selected parameters. The app would look for a match and allow the user to read more about the dog allowing them to decide if they want to move forward with adoption. App also allows users to search for rescues based on the location provided.
 
+![](dog-rescue.gif)
 ## Cloning Repository
 
 ```bash
