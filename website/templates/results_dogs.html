@@ -1,380 +1,381 @@
 {% extends "base.html" %} {% block title %}Dog Results{% endblock %}
 
 {% block content %}
-<br>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <li class="nav-item active">
-        <a class="nav-link btn btn-warning" href="#" onclick="toggleMenu()">Filter by page</a>
-        
-        <div id="sidebar">
-            <div class="container-fluid" id="container-filter">
-                <div class="row" id="filterSection">
-                    <section class="col-12" id="filterHeaderBar">
-                        <div class="row">
-                            <div class="col-2">
-                                <button class="btn" type="button"><i class='bx bxs-chevron-left' onclick="toggleMenu()"></i></button>
-                            </div>
-                            <div class="col-10" id="filterTitle">
-                                Filters
-                            </div>
-                        </div>
-                    </section>
-            
-                    <section class="col-12" id="filterSection">
-                        <div class="accordion" id="filterAccordion">
-                            <div class="card">
-                              <div class="card-header" id="headingOne">
-                                <h5 class="mb-0">
-                                  <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                    Show by Primary breed
-                                  </button>
-                                </h5>
+  <!-- Navigation bar: Filter, Sort, New Search, Search Rescues -->
+  <br>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <li class="nav-item active">
+          <a class="nav-link btn btn-warning" href="#" onclick="toggleMenu()">Filter by page</a>
+          
+          <div id="sidebar">
+              <div class="container-fluid" id="container-filter">
+                  <div class="row" id="filterSection">
+                      <section class="col-12" id="filterHeaderBar">
+                          <div class="row">
+                              <div class="col-2">
+                                  <button class="btn" type="button"><i class='bx bxs-chevron-left' onclick="toggleMenu()"></i></button>
                               </div>
-                          
-                              <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#filterAccordion">
-                                <div class="card-body" id="cardPrimary">
-                                    {% for n in data["primaryBreeds"] %}
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="{{n}}" id="filterPrimaryBreeds">
-                                        <label class="form-check-label" for="filterPrimaryBreeds">
-                                          {{n}}
-                                        </label>
-                                    </div>
-                                    {% endfor %}
+                              <div class="col-10" id="filterTitle">
+                                  Filters
+                              </div>
+                          </div>
+                      </section>
+              
+                      <section class="col-12" id="filterSection">
+                          <div class="accordion" id="filterAccordion">
+                              <div class="card">
+                                <div class="card-header" id="headingOne">
+                                  <h5 class="mb-0">
+                                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                      Show by Primary breed
+                                    </button>
+                                  </h5>
                                 </div>
-                              </div>
-                            </div>
-                            <div class="card">
-                              <div class="card-header" id="headingTwo">
-                                <h5 class="mb-0">
-                                  <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                    Show by Secondary breed
-                                  </button>
-                                </h5>
-                              </div>
-                              <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#filterAccordion">
-                                <div class="card-body" id="cardSecondary">
-                                    {% for n in data["secondaryBreeds"] %}
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="{{n}}" id="filterSecondaryBreeds">
-                                        <label class="form-check-label" for="filterSecondaryBreeds">
-                                          {{n}}
-                                        </label>
-                                    </div>
-                                    {% endfor %}
-                                </div>
-                              </div>
-                            </div>
-                            <div class="card">
-                              <div class="card-header" id="headingThree">
-                                <h5 class="mb-0">
-                                  <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                    Show by Age
-                                  </button>
-                                </h5>
-                              </div>
-                              <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#filterAccordion">
-                                <div class="card-body" id="cardAge">
-                                    {% for n in data["age"] %}
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="{{n}}" id="filterAge">
-                                        <label class="form-check-label" for="filterAge">
-                                          {{n}}
-                                        </label>
-                                    </div>
-                                    {% endfor %}
-                                </div>
-                              </div>
-                            </div>
-                            <div class="card">
-                              <div class="card-header" id="headingFour">
-                                <h5 class="mb-0">
-                                  <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                                    Show by Size
-                                  </button>
-                                </h5>
-                              </div>
-                              <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#filterAccordion">
-                                <div class="card-body" id="cardSize">
-                                    {% for n in data["size"] %}
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="{{n}}" id="filterSize">
-                                        <label class="form-check-label" for="filterSize">
-                                          {{n}}
-                                        </label>
-                                    </div>
-                                    {% endfor %}
-                                </div>
-                              </div>
-                            </div>
-                            <div class="card">
-                              <div class="card-header" id="headingFive">
-                                <h5 class="mb-0">
-                                  <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
-                                    Show by Gender
-                                  </button>
-                                </h5>
-                              </div>
-                              <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#filterAccordion">
-                                <div class="card-body" id="cardGender">
-                                    {% for n in data["gender"] %}
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="{{n}}" id="filterGender">
-                                        <label class="form-check-label" for="filterGender">
-                                          {{n}}
-                                        </label>
-                                    </div>
-                                    {% endfor %}
-                                </div>
-                              </div>
-                            </div>
-                        </div>
-                        <button onclick="filterDogs()">Filter</button>
-                    </section>
-                </div>
-            </div>
-        </div>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link">Sort by:</a>
-    </li>
-    <li>
-        <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <form action="/dogs" method="post">
-                    <input class="form-check-input" type="text" name="params" id="params" value="{{data['params']}}" style="display: none">
-
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="sortSelection" id="newest" value="Newest">
-                        <label class="form-check-label" for="newest">
-                            Newest
-                        </label>
-                      </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="sortSelection" id="oldest" value="Oldest">
-                        <label class="form-check-label" for="oldest">
-                            Oldest
-                        </label>
-                      </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="sortSelection" id="nearest" value="Nearest">
-                        <label class="form-check-label" for="nearest">
-                            Nearest
-                        </label>
-                      </div>
-                      <div class="form-check">
-                        <input class="form-check-input" type="radio" name="sortSelection" id="furthest" value="Furthest">
-                        <label class="form-check-label" for="furthest">
-                            Furthest
-                        </label>
-                      </div>
-                      <div class="form-check">
-                        <input class="form-check-input" type="radio" name="sortSelection" id="random" value="Random">
-                        <label class="form-check-label" for="random">
-                            Random
-                        </label>
-                      </div>
-                        <button type="submit" class="btn btn-primary" style="margin-left: 25px;">Sort</button>
-                </form>
-            </div>
-        </div>
-    </li>
-
-    
-    <li class="nav-item" style="margin-left: 15px;">
-        <!-- Button trigger modal Search Dogs-->
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#searchDogsModal">
-            New Search
-        </button>
-
-        <!-- Modal -->
-        <div class="modal fade" id="searchDogsModal" tabindex="-1" role="dialog" aria-labelledby="searchDogsModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                    <h5 class="modal-title" id="searchDogsModalLabel">Search for dogs</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    </div>
-                    <div class="modal-body">
-                        <form action="/dogs" method="post">
-                            <div class="mb-3">
-                                <label for="location" class="form-label">Location*</label>
-                                <input type="number" class="form-control" id="location" aria-describedby="locationHelp" name="location" placeholder="Enter Zip Code" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="distance" class="form-label">Distance</label>
-                                <input type="number" class="form-control" id="distance" aria-describedby="distanceHelp" name="distance" placeholder="Enter Miles">
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="breed" class="form-label">Breed</label>
-                                <br>
-                                <input list="breedList" name="breed" id="breed" class="form-control" placeholder="Select Breed">
-                                <datalist id="breedList">
-                                    {% for n in data["breeds"] %}
-                                        <option value="{{n.name}}"></option>
-                                    {% endfor %}
-                                </datalist>
-                            </div>
                             
-                            <div class="mb-3">
-                                <label for="age" class="form-label">Age</label>
-                                <!-- <input type="text" class="form-control" id="age" aria-describedby="ageHelp" name="age" placeholder="Enter Age"> -->
-                                <br>
-                                <input list="ageList" name="age" id="age" class="form-control" placeholder="Select Age">
-                                <datalist id="ageList">
-                                    <option value="baby"></option>
-                                    <option value="young"></option>
-                                    <option value="adult"></option>
-                                    <option value="senior"></option>
-                                </datalist>
-                            </div>
-    
-                            <!-- male, female, unknown Accepts multiple values, e.g. gender=male,female -->
-                            <div class="mb-3">
-                                <label for="gender" class="form-label">Gender</label>
-                                <!-- <input type="text" class="form-control" id="gender" aria-describedby="genderHelp" name="gender" placeholder="Enter Gender"> -->
-                                <br>
-                                <input list="genderList" name="gender" id="gender" class="form-control" placeholder="Select Gender">
-                                <datalist id="genderList">
-                                    <option value="male"></option>
-                                    <option value="female"></option>
-                                    <option value="unknown"></option>
-                                </datalist>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="limit" class="form-label">Results per page</label>
-                                <br />
-                                <input
-                                  list="numResultsList"
-                                  name="limit"
-                                  id="limit"
-                                  class="form-control"
-                                  placeholder="Select Number of Results to Display"
-                                />
-                                <datalist id="numResultsList">
-                                  <option value="20"></option>
-                                  <option value="50"></option>
-                                  <option value="100"></option>
-                                </datalist>
+                                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#filterAccordion">
+                                  <div class="card-body" id="cardPrimary">
+                                      {% for n in data["primaryBreeds"] %}
+                                      <div class="form-check">
+                                          <input class="form-check-input" type="checkbox" value="{{n}}" id="filterPrimaryBreeds">
+                                          <label class="form-check-label" for="filterPrimaryBreeds">
+                                            {{n}}
+                                          </label>
+                                      </div>
+                                      {% endfor %}
+                                  </div>
+                                </div>
                               </div>
-    
-                            <div id="note" class="form-text">Note: Filling out more fields allows us to better find your perfect dog</div>
-                            <br>
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </li>
+                              <div class="card">
+                                <div class="card-header" id="headingTwo">
+                                  <h5 class="mb-0">
+                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                      Show by Secondary breed
+                                    </button>
+                                  </h5>
+                                </div>
+                                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#filterAccordion">
+                                  <div class="card-body" id="cardSecondary">
+                                      {% for n in data["secondaryBreeds"] %}
+                                      <div class="form-check">
+                                          <input class="form-check-input" type="checkbox" value="{{n}}" id="filterSecondaryBreeds">
+                                          <label class="form-check-label" for="filterSecondaryBreeds">
+                                            {{n}}
+                                          </label>
+                                      </div>
+                                      {% endfor %}
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="card">
+                                <div class="card-header" id="headingThree">
+                                  <h5 class="mb-0">
+                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                      Show by Age
+                                    </button>
+                                  </h5>
+                                </div>
+                                <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#filterAccordion">
+                                  <div class="card-body" id="cardAge">
+                                      {% for n in data["age"] %}
+                                      <div class="form-check">
+                                          <input class="form-check-input" type="checkbox" value="{{n}}" id="filterAge">
+                                          <label class="form-check-label" for="filterAge">
+                                            {{n}}
+                                          </label>
+                                      </div>
+                                      {% endfor %}
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="card">
+                                <div class="card-header" id="headingFour">
+                                  <h5 class="mb-0">
+                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                      Show by Size
+                                    </button>
+                                  </h5>
+                                </div>
+                                <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#filterAccordion">
+                                  <div class="card-body" id="cardSize">
+                                      {% for n in data["size"] %}
+                                      <div class="form-check">
+                                          <input class="form-check-input" type="checkbox" value="{{n}}" id="filterSize">
+                                          <label class="form-check-label" for="filterSize">
+                                            {{n}}
+                                          </label>
+                                      </div>
+                                      {% endfor %}
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="card">
+                                <div class="card-header" id="headingFive">
+                                  <h5 class="mb-0">
+                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                                      Show by Gender
+                                    </button>
+                                  </h5>
+                                </div>
+                                <div id="collapseFive" class="collapse" aria-labelledby="headingFive" data-parent="#filterAccordion">
+                                  <div class="card-body" id="cardGender">
+                                      {% for n in data["gender"] %}
+                                      <div class="form-check">
+                                          <input class="form-check-input" type="checkbox" value="{{n}}" id="filterGender">
+                                          <label class="form-check-label" for="filterGender">
+                                            {{n}}
+                                          </label>
+                                      </div>
+                                      {% endfor %}
+                                  </div>
+                                </div>
+                              </div>
+                          </div>
+                          <button onclick="filterDogs()">Filter</button>
+                      </section>
+                  </div>
+              </div>
+          </div>
+      </li>
+      <li class="nav-item">
+          <a class="nav-link">Sort by:</a>
+      </li>
+      <li>
+          <div class="dropdown">
+              <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <form action="/dogs" method="post">
+                      <input class="form-check-input" type="text" name="params" id="params" value="{{data['params']}}" style="display: none">
+
+                      <div class="form-check">
+                          <input class="form-check-input" type="radio" name="sortSelection" id="newest" value="Newest">
+                          <label class="form-check-label" for="newest">
+                              Newest
+                          </label>
+                        </div>
+                      <div class="form-check">
+                          <input class="form-check-input" type="radio" name="sortSelection" id="oldest" value="Oldest">
+                          <label class="form-check-label" for="oldest">
+                              Oldest
+                          </label>
+                        </div>
+                      <div class="form-check">
+                          <input class="form-check-input" type="radio" name="sortSelection" id="nearest" value="Nearest">
+                          <label class="form-check-label" for="nearest">
+                              Nearest
+                          </label>
+                        </div>
+                        <div class="form-check">
+                          <input class="form-check-input" type="radio" name="sortSelection" id="furthest" value="Furthest">
+                          <label class="form-check-label" for="furthest">
+                              Furthest
+                          </label>
+                        </div>
+                        <div class="form-check">
+                          <input class="form-check-input" type="radio" name="sortSelection" id="random" value="Random">
+                          <label class="form-check-label" for="random">
+                              Random
+                          </label>
+                        </div>
+                          <button type="submit" class="btn btn-primary" style="margin-left: 25px;">Sort</button>
+                  </form>
+              </div>
+          </div>
+      </li>
+
+      
+      <li class="nav-item" style="margin-left: 15px;">
+          <!-- Button trigger modal Search Dogs-->
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#searchDogsModal">
+              New Search
+          </button>
+
+          <!-- Modal -->
+          <div class="modal fade" id="searchDogsModal" tabindex="-1" role="dialog" aria-labelledby="searchDogsModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                      <h5 class="modal-title" id="searchDogsModalLabel">Search for dogs</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                      </button>
+                      </div>
+                      <div class="modal-body">
+                          <form action="/dogs" method="post">
+                              <div class="mb-3">
+                                  <label for="location" class="form-label">Location*</label>
+                                  <input type="number" class="form-control" id="location" aria-describedby="locationHelp" name="location" placeholder="Enter Zip Code" required>
+                              </div>
+                              <div class="mb-3">
+                                  <label for="distance" class="form-label">Distance</label>
+                                  <input type="number" class="form-control" id="distance" aria-describedby="distanceHelp" name="distance" placeholder="Enter Miles">
+                              </div>
+
+                              <div class="mb-3">
+                                  <label for="breed" class="form-label">Breed</label>
+                                  <br>
+                                  <input list="breedList" name="breed" id="breed" class="form-control" placeholder="Select Breed">
+                                  <datalist id="breedList">
+                                      {% for n in data["breeds"] %}
+                                          <option value="{{n.name}}"></option>
+                                      {% endfor %}
+                                  </datalist>
+                              </div>
+                              
+                              <div class="mb-3">
+                                  <label for="age" class="form-label">Age</label>
+                                  <!-- <input type="text" class="form-control" id="age" aria-describedby="ageHelp" name="age" placeholder="Enter Age"> -->
+                                  <br>
+                                  <input list="ageList" name="age" id="age" class="form-control" placeholder="Select Age">
+                                  <datalist id="ageList">
+                                      <option value="baby"></option>
+                                      <option value="young"></option>
+                                      <option value="adult"></option>
+                                      <option value="senior"></option>
+                                  </datalist>
+                              </div>
+      
+                              <!-- male, female, unknown Accepts multiple values, e.g. gender=male,female -->
+                              <div class="mb-3">
+                                  <label for="gender" class="form-label">Gender</label>
+                                  <!-- <input type="text" class="form-control" id="gender" aria-describedby="genderHelp" name="gender" placeholder="Enter Gender"> -->
+                                  <br>
+                                  <input list="genderList" name="gender" id="gender" class="form-control" placeholder="Select Gender">
+                                  <datalist id="genderList">
+                                      <option value="male"></option>
+                                      <option value="female"></option>
+                                      <option value="unknown"></option>
+                                  </datalist>
+                              </div>
+
+                              <div class="mb-3">
+                                  <label for="limit" class="form-label">Results per page</label>
+                                  <br />
+                                  <input
+                                    list="numResultsList"
+                                    name="limit"
+                                    id="limit"
+                                    class="form-control"
+                                    placeholder="Select Number of Results to Display"
+                                  />
+                                  <datalist id="numResultsList">
+                                    <option value="20"></option>
+                                    <option value="50"></option>
+                                    <option value="100"></option>
+                                  </datalist>
+                                </div>
+      
+                              <div id="note" class="form-text">Note: Filling out more fields allows us to better find your perfect dog</div>
+                              <br>
+                              <button type="submit" class="btn btn-primary">Submit</button>
+                          </form>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </li>
 
 
-    <li class="nav-item" style="margin-left: 15px;">
-        <!-- Button trigger modal Search Rescues-->
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#searchRescueModal">
-            Search Rescues
-        </button>
+      <li class="nav-item" style="margin-left: 15px;">
+          <!-- Button trigger modal Search Rescues-->
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#searchRescueModal">
+              Search Rescues
+          </button>
 
-        <!-- Modal -->
-        <div class="modal fade" id="searchRescueModal" tabindex="-1" role="dialog" aria-labelledby="searchRescueModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="searchRescueModalLabel">Search for rescues</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form action="/rescues" method="post">
-                            <div class="mb-3">
-                                <label for="location" class="form-label">Location*</label>
-                                <input type="number" class="form-control" id="location" aria-describedby="locationHelp" name="location" placeholder="Enter Zip Code" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="distance" class="form-label">Distance</label>
-                                <input type="number" class="form-control" id="distance" aria-describedby="distanceHelp" name="distance" placeholder="Enter Miles">
-                            </div>
-                            <div id="note" class="form-text">Note: Increasing distance will show more results
-                                
-                            </div>
-                            <br>
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </form>
-    
-                    </div>
-                </div>
-            </div>
-        </div>
-    </li>
-</nav>
+          <!-- Modal -->
+          <div class="modal fade" id="searchRescueModal" tabindex="-1" role="dialog" aria-labelledby="searchRescueModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <h5 class="modal-title" id="searchRescueModalLabel">Search for rescues</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                          </button>
+                      </div>
+                      <div class="modal-body">
+                          <form action="/rescues" method="post">
+                              <div class="mb-3">
+                                  <label for="location" class="form-label">Location*</label>
+                                  <input type="number" class="form-control" id="location" aria-describedby="locationHelp" name="location" placeholder="Enter Zip Code" required>
+                              </div>
+                              <div class="mb-3">
+                                  <label for="distance" class="form-label">Distance</label>
+                                  <input type="number" class="form-control" id="distance" aria-describedby="distanceHelp" name="distance" placeholder="Enter Miles">
+                              </div>
+                              <div id="note" class="form-text">Note: Increasing distance will show more results
+                                  
+                              </div>
+                              <br>
+                              <button type="submit" class="btn btn-primary">Submit</button>
+                          </form>
+      
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </li>
+  </nav>
 
-{% if data["sorted"] %}
-    <h3>{{data['pagination'].total_count}} Available Dogs {{data['distance']}} miles from {{data['location']}}
-        <br>Sorted by: {{data['sorted']}}</h3>
-{%else%}
-    <h3>{{data['pagination'].total_count}} Available Dogs {{data['distance']}} miles from {{data['location']}}  <br>Sorted by: Newest</h3></h3>
-{% endif %}
+  <!-- Handle Display if Sorted -->
+  {% if data["sorted"] %}
+      <h3>{{data['pagination'].total_count}} Available Dogs {{data['distance']}} miles from {{data['location']}}
+          <br>Sorted by: {{data['sorted']}}</h3>
+  {%else%}
+      <h3>{{data['pagination'].total_count}} Available Dogs {{data['distance']}} miles from {{data['location']}}  <br>Sorted by: Newest</h3></h3>
+  {% endif %}
 
-    <div class="dogSection">
-        {% for n in range(data["animals"]| length) %}
+  <!-- Dog Results -->
+  <div class="dogSection">
+      {% for n in range(data["animals"]| length) %}
 
-        <div class="eachDog">
-            <h2>{{data["animals"][n].name}}</h2>
-            <div>
-                {% if data["animals"][n].photos[0] %}
-                    <a href="{{data["animals"][n].url}}"><img src="{{data["animals"][n].photos[0]['medium']}}" alt=""></a>
-                {% else %}
-                    <a href="{{data["animals"][n].url}}"><img src="{{ url_for('static', filename='holder.JPG') }}" alt="" height="300"></a>
-                {% endif %}
-            </div>
+      <div class="eachDog">
+          <h2>{{data["animals"][n].name}}</h2>
+          <div>
+              {% if data["animals"][n].photos[0] %}
+                  <a href="{{data["animals"][n].url}}"><img src="{{data["animals"][n].photos[0]['medium']}}" alt=""></a>
+              {% else %}
+                  <a href="{{data["animals"][n].url}}"><img src="{{ url_for('static', filename='holder.JPG') }}" alt="" height="300"></a>
+              {% endif %}
+          </div>
 
-            <br>
-            <ul>
-                <li><strong>Primary Breed:</strong><span id="dogBreed"> {{data["animals"][n].breeds['primary']}} </span><button onclick="dogDescription({{n}})">More Info</button></li>
-                <li><strong>Secondary Breed:</strong> <span>{{data["animals"][n].breeds['secondary']}}</span></li>
-                <li><strong>Age:</strong> <span>{{data["animals"][n].age}}</span></li>
-                <li><strong>Size:</strong> <span>{{data["animals"][n].size}}</span></li>
-                <li><strong>Gender:</strong> <span>{{data["animals"][n].gender}}</span></li>
-                <li><strong>Distance:</strong> <span>{{data["animals"][n].distance}}</span> miles</li>
-                <li><strong>Added:</strong> <span>{{data["animals"][n].published_at[0:10]}}</span></li>
-            </ul>
+          <br>
+          <ul>
+              <li><strong>Primary Breed:</strong><span id="dogBreed"> {{data["animals"][n].breeds['primary']}} </span><button onclick="dogDescription({{n}})">More Info</button></li>
+              <li><strong>Secondary Breed:</strong> <span>{{data["animals"][n].breeds['secondary']}}</span></li>
+              <li><strong>Age:</strong> <span>{{data["animals"][n].age}}</span></li>
+              <li><strong>Size:</strong> <span>{{data["animals"][n].size}}</span></li>
+              <li><strong>Gender:</strong> <span>{{data["animals"][n].gender}}</span></li>
+              <li><strong>Distance:</strong> <span>{{data["animals"][n].distance}}</span> miles</li>
+              <li><strong>Added:</strong> <span>{{data["animals"][n].published_at[0:10]}}</span></li>
+          </ul>
 
-            <p id={{n}} style="display:none;"></p>
+          <p id={{n}} style="display:none;"></p>
 
-        </div>
+      </div>
 
-    {% endfor %}
-    </div>
+  {% endfor %}
+  </div>
 
+  <!-- Handle Pagination -->
+  {% if data['pagination']._links %}
+  <div class="pagination">
+      {% if data['pagination']._links['previous'] %}
+      <form action="/dogs" method="post">
+          <div class="mb-3" style="display:none">
+              <input type="text" class="form-control" id="next" aria-describedby="nextHelp" name="next" value="{{data['pagination']._links['previous'].href}}">
+          </div>
+          <button type="submit" class="btn btn-primary">Previous</button>
+      </form>
+      {% endif %}
 
-    {% if data['pagination']._links %}
-    <div class="pagination">
-        {% if data['pagination']._links['previous'] %}
-        <form action="/dogs" method="post">
-            <div class="mb-3" style="display:none">
-                <input type="text" class="form-control" id="next" aria-describedby="nextHelp" name="next" value="{{data['pagination']._links['previous'].href}}">
-            </div>
-            <button type="submit" class="btn btn-primary">Previous</button>
-        </form>
-        {% endif %}
-
-        {% if data['pagination']._links['next'] %}
-            <form action="/dogs" method="post">
-                <div class="mb-3" style="display:none">
-                    <input type="text" class="form-control" id="next" aria-describedby="nextHelp" name="next" value="{{data['pagination']._links['next'].href}}">
-                </div>
-                <button type="submit" class="btn btn-primary">Next</button>
-            </form>
-        {% endif %}
-    </div>
-    {% endif %}
-
-
+      {% if data['pagination']._links['next'] %}
+          <form action="/dogs" method="post">
+              <div class="mb-3" style="display:none">
+                  <input type="text" class="form-control" id="next" aria-describedby="nextHelp" name="next" value="{{data['pagination']._links['next'].href}}">
+              </div>
+              <button type="submit" class="btn btn-primary">Next</button>
+          </form>
+      {% endif %}
+  </div>
+  {% endif %}
     
 {% endblock %}

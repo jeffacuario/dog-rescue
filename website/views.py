@@ -17,7 +17,6 @@ def setupAPI():
     Initial Setup of PetFinder API 
     Returns headers needed to make calls for other functions
     """
-    # load credentials from file
     with open('credentials.json') as configFile:
         config = json.load(configFile)
 
